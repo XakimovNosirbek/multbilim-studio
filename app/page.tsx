@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { AnimatedStats } from "./components/AnimatedStats";
 import { ProjectContactForm } from "./components/ProjectContactForm";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
@@ -96,14 +95,14 @@ export default function Home() {
         </div>
         <div className="project-grid">
           {projects.map((project, index) => (
-            <Link className={`project-card ${project.className}`} href={`/projects/${project.slug}`} key={project.slug} aria-label={`${project.title} loyihasini ochish`}>
+            <a className={`project-card ${project.className}`} href={`/projects/${project.slug}`} key={project.slug} aria-label={`${project.title} loyihasini ochish`}>
               <img src={project.image} alt={`${project.title} loyihasi`} loading="lazy" />
               <div className="project-shade" /><span className="project-number">0{index + 1}</span>
               <div className="project-content">
                 <p>{project.eyebrow}</p><h3>{project.title}</h3><span className="project-meta">{project.meta}</span>
                 <div className="project-reveal"><p>{project.description}</p><span className="project-open">Loyihani ochish <b>↗</b></span></div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </section>

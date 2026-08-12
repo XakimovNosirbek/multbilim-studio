@@ -19,30 +19,49 @@ export function AnimatedStats() {
     if (!element) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let frameId = 0;
+
+    const stopAnimation = () => {
+      if (frameId) window.cancelAnimationFrame(frameId);
+      frameId = 0;
+    };
+
+    const playAnimation = () => {
+      stopAnimation();
+
+      if (reduceMotion) {
+        setProgress(1);
+        return;
+      }
+
+      setProgress(0);
+      const duration = 1450;
+      const startedAt = performance.now();
+      const animate = (now: number) => {
+        const elapsed = Math.min((now - startedAt) / duration, 1);
+        setProgress(1 - Math.pow(1 - elapsed, 3));
+        frameId = elapsed < 1 ? window.requestAnimationFrame(animate) : 0;
+      };
+      frameId = window.requestAnimationFrame(animate);
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-
-        if (reduceMotion) {
-          setProgress(1);
-          return;
+        if (entry.isIntersecting) {
+          playAnimation();
+        } else if (!reduceMotion) {
+          stopAnimation();
+          setProgress(0);
         }
-
-        const duration = 1450;
-        const startedAt = performance.now();
-        const animate = (now: number) => {
-          const elapsed = Math.min((now - startedAt) / duration, 1);
-          setProgress(1 - Math.pow(1 - elapsed, 3));
-          if (elapsed < 1) window.requestAnimationFrame(animate);
-        };
-        window.requestAnimationFrame(animate);
       },
-      { threshold: 0.3 },
+      { threshold: 0.24, rootMargin: "-6% 0px -6%" },
     );
 
     observer.observe(element);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      stopAnimation();
+    };
   }, []);
 
   return (
