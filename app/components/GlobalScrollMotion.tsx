@@ -40,13 +40,16 @@ export function GlobalScrollMotion() {
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const elements = Array.from(document.querySelectorAll<HTMLElement>(selector));
+    const visibleElements = new Set<HTMLElement>();
     let lastScrollY = window.scrollY;
     let scrollDirection: "down" | "up" = "down";
+    let animationFrame = 0;
 
     elements.forEach((element, index) => {
       element.classList.add("scroll-motion-item");
       element.style.setProperty("--scroll-motion-delay", `${(index % 5) * 45}ms`);
       element.style.setProperty("--scroll-motion-y", "18px");
+      element.style.setProperty("--scroll-live-y", "0px");
     });
 
     if (reduceMotion) {
@@ -54,19 +57,33 @@ export function GlobalScrollMotion() {
       return;
     }
 
+    const updateVisibleMotion = () => {
+      animationFrame = 0;
+      const viewportHeight = window.innerHeight;
+      visibleElements.forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const normalized = Math.max(-1, Math.min(1, (center - viewportHeight / 2) / (viewportHeight / 2)));
+        element.style.setProperty("--scroll-live-y", `${(-normalized * 5).toFixed(2)}px`);
+      });
+    };
+
     const updateDirection = () => {
       const nextScrollY = window.scrollY;
       const nextDirection = nextScrollY >= lastScrollY ? "down" : "up";
       lastScrollY = nextScrollY;
 
-      if (nextDirection === scrollDirection) return;
-      scrollDirection = nextDirection;
-      const offset = scrollDirection === "down" ? "18px" : "-18px";
-      elements.forEach((element) => {
-        if (!element.classList.contains("is-visible")) {
-          element.style.setProperty("--scroll-motion-y", offset);
-        }
-      });
+      if (nextDirection !== scrollDirection) {
+        scrollDirection = nextDirection;
+        const offset = scrollDirection === "down" ? "18px" : "-18px";
+        elements.forEach((element) => {
+          if (!element.classList.contains("is-visible")) {
+            element.style.setProperty("--scroll-motion-y", offset);
+          }
+        });
+      }
+
+      if (!animationFrame) animationFrame = window.requestAnimationFrame(updateVisibleMotion);
     };
 
     window.addEventListener("scroll", updateDirection, { passive: true });
@@ -80,9 +97,13 @@ export function GlobalScrollMotion() {
               "--scroll-motion-y",
               scrollDirection === "down" ? "18px" : "-18px",
             );
+            visibleElements.add(element);
             element.classList.add("is-visible");
+            if (!animationFrame) animationFrame = window.requestAnimationFrame(updateVisibleMotion);
           } else {
+            visibleElements.delete(element);
             element.classList.remove("is-visible");
+            element.style.setProperty("--scroll-live-y", "0px");
           }
         });
       },
@@ -93,6 +114,7 @@ export function GlobalScrollMotion() {
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", updateDirection);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
     };
   }, [pathname]);
 
