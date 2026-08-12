@@ -855,19 +855,19 @@ button {
 
 .scroll-motion-item {
   opacity: 0;
-  transform: translate3d(0, 20px, 0);
-  filter: blur(4px);
+  transform: translate3d(0, var(--scroll-motion-y, 18px), 0) scale(.996);
+  filter: blur(3px);
   transition:
-    opacity 720ms cubic-bezier(.2,.72,.2,1),
-    transform 820ms cubic-bezier(.16,.78,.2,1),
-    filter 650ms ease;
+    opacity 680ms cubic-bezier(.2,.72,.2,1),
+    transform 780ms cubic-bezier(.16,.78,.2,1),
+    filter 620ms ease;
   transition-delay: var(--scroll-motion-delay, 0ms);
   will-change: opacity, transform, filter;
 }
 
 .scroll-motion-item.is-visible {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0);
 }
 
