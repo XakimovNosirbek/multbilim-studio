@@ -48,6 +48,7 @@ function getDeviceType() {
 
 export function PrivacyCenter() {
   const pathname = usePathname();
+  const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
   const trackedPath = useRef("");
   const [ready, setReady] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
@@ -56,19 +57,24 @@ export function PrivacyCenter() {
   const [privacySignal, setPrivacySignal] = useState(false);
 
   useEffect(() => {
-    const signal = privacySignalEnabled();
-    const saved = readChoice();
-    setPrivacySignal(signal);
-    setAnalyticsEnabled(Boolean(saved?.analytics) && !signal);
-    setShowBanner(!saved);
-    setReady(true);
+    const animationFrame = window.requestAnimationFrame(() => {
+      const signal = privacySignalEnabled();
+      const saved = readChoice();
+      setPrivacySignal(signal);
+      setAnalyticsEnabled(Boolean(saved?.analytics) && !signal);
+      setShowBanner(!saved);
+      setReady(true);
+    });
 
     const openSettings = (event: Event) => {
       const target = event.target as HTMLElement | null;
       if (target?.closest("[data-privacy-open]")) setShowSettings(true);
     };
     document.addEventListener("click", openSettings);
-    return () => document.removeEventListener("click", openSettings);
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      document.removeEventListener("click", openSettings);
+    };
   }, []);
 
   useEffect(() => {
@@ -81,7 +87,7 @@ export function PrivacyCenter() {
   }, [showSettings]);
 
   useEffect(() => {
-    if (!ready || !analyticsEnabled || privacySignal || trackedPath.current === pathname) return;
+    if (isAdmin || !ready || !analyticsEnabled || privacySignal || trackedPath.current === pathname) return;
     trackedPath.current = pathname;
 
     let visitorId = localStorage.getItem(VISITOR_KEY);
@@ -104,7 +110,7 @@ export function PrivacyCenter() {
         consentVersion: CONSENT_VERSION,
       }),
     }).catch(() => undefined);
-  }, [analyticsEnabled, pathname, privacySignal, ready]);
+  }, [analyticsEnabled, isAdmin, pathname, privacySignal, ready]);
 
   const saveChoice = (analytics: boolean) => {
     const accepted = analytics && !privacySignal;
@@ -122,7 +128,7 @@ export function PrivacyCenter() {
     setShowSettings(false);
   };
 
-  if (!ready) return null;
+  if (!ready || isAdmin) return null;
 
   return (
     <>
@@ -154,10 +160,10 @@ export function PrivacyCenter() {
               <div><strong>Zarur xotira</strong><p>Tema va maxfiylik tanlovingizni eslab qoladi. Saytning asosiy ishlashi uchun kerak.</p></div>
               <span>Doimo faol</span>
             </div>
-            <label className="privacy-option">
-              <div><strong>Anonim analitika</strong><p>Tashrif vaqti, sahifa, manba, til va qurilma turini saqlaydi. IP manzil saqlanmaydi.</p></div>
-              <input type="checkbox" checked={analyticsEnabled} disabled={privacySignal} onChange={(event) => setAnalyticsEnabled(event.target.checked)} />
-            </label>
+            <div className="privacy-option">
+              <div><label htmlFor="privacy-analytics"><strong>Anonim analitika</strong></label><p>Tashrif vaqti, sahifa, manba, til va qurilma turini saqlaydi. IP manzil saqlanmaydi.</p></div>
+              <input id="privacy-analytics" type="checkbox" checked={analyticsEnabled} disabled={privacySignal} onChange={(event) => setAnalyticsEnabled(event.target.checked)} />
+            </div>
             {privacySignal && <p className="privacy-signal-note">Brauzeringiz kuzatuvni cheklashni so‘ragani uchun analitika o‘chirilgan.</p>}
             <div className="privacy-modal-actions">
               <button type="button" className="button button-primary" onClick={() => saveChoice(analyticsEnabled)}>Tanlovni saqlash</button>

@@ -39,7 +39,9 @@ export function GlobalScrollMotion() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const elements = Array.from(document.querySelectorAll<HTMLElement>(selector));
+    const elements = Array.from(document.querySelectorAll<HTMLElement>(selector)).filter(
+      (element) => !element.closest(".admin-shell"),
+    );
     const visibleElements = new Set<HTMLElement>();
     let lastScrollY = window.scrollY;
     let scrollDirection: "down" | "up" = "down";
