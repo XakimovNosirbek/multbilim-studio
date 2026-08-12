@@ -1,80 +1,7 @@
-const projects = [
-  {
-    title: "Alpomish",
-    eyebrow: "Epik fantastika",
-    image: "/media/alpomish.jpg",
-    description:
-      "Qadimiy doston ruhi, zamonaviy qahramonlik va katta ekran uchun yaratilgan milliy olam.",
-    meta: "To‘liq metrajli · Ishlab chiqilmoqda",
-    className: "project-card--wide",
-  },
-  {
-    title: "Ikki Dunyo",
-    eyebrow: "Musiqiy fantasy",
-    image: "/media/ikki-dunyo.jpg",
-    description:
-      "Tarix va bugunni musiqa, sirli portal va bir taqdir orqali bog‘laydigan sarguzasht.",
-    meta: "Serial konsepti · 12 qism",
-    className: "project-card--tall",
-  },
-  {
-    title: "Zij",
-    eyebrow: "Ilmiy sarguzasht",
-    image: "/media/zij.jpg",
-    description:
-      "Ulug‘bek merosi, kosmos va yosh ixtirochilarning kelajak sari sayohati.",
-    meta: "Animatsion serial · Rivojlanishda",
-    className: "",
-  },
-  {
-    title: "Meva-Cheva",
-    eyebrow: "Maktabgacha yoshdagilar uchun",
-    image: "/media/meva-cheva.jpg",
-    description:
-      "Quvnoq meva va sabzavotlar bolalarga do‘stlik, tartib va foydali odatlarni o‘rgatadi.",
-    meta: "3D serial · 4–8 yosh",
-    className: "",
-  },
-  {
-    title: "Megavoylar",
-    eyebrow: "Texnologik ta’lim",
-    image: "/media/megavoylar.jpg",
-    description:
-      "Raqamli xavfsizlik va texnologiyani sarguzashtga aylantirgan yangi avlod qahramonlari.",
-    meta: "Ta’limiy serial · Konsept",
-    className: "",
-  },
-  {
-    title: "Sehrli Qalpoqcha",
-    eyebrow: "Maktab sarguzashti",
-    image: "/media/sehrli-qalpoqcha.jpg",
-    description:
-      "Orzu, bilim va jasorat haqida zamonaviy o‘zbek maktabida kechadigan sehrli hikoya.",
-    meta: "3D serial · Ishlab chiqilmoqda",
-    className: "project-card--wide",
-  },
-];
-
-const videos = [
-  {
-    title: "Bek va Lola — Badantarbiya 2",
-    channel: "Bek va Lola",
-    image: "https://i.ytimg.com/vi/BQy49Y12YDo/maxresdefault.jpg",
-    href: "https://www.youtube.com/watch?v=BQy49Y12YDo",
-  },
-  {
-    title: "Bek va Lola — Toza qo‘llar",
-    channel: "Bek va Lola",
-    image: "https://i.ytimg.com/vi/g7Km27hLJ5E/maxresdefault.jpg",
-    href: "https://www.youtube.com/watch?v=g7Km27hLJ5E",
-  },
-  {
-    title: "Chip-chip jo‘jalarim",
-    channel: "Yashil makon",
-    image: "https://i.ytimg.com/vi/-Huu9yfBlsU/maxresdefault.jpg",
-    href: "https://www.youtube.com/watch?v=-Huu9yfBlsU",
-  },
-];
+import Link from "next/link";
+import { SiteFooter, SiteHeader } from "./components/SiteChrome";
+import { VideoGallery } from "./components/VideoGallery";
+import { projects } from "./data/projects";
 
 const services = [
   {
@@ -97,36 +24,7 @@ const services = [
 export default function Home() {
   return (
     <main>
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="MultBilim bosh sahifasi">
-          <span className="brand-crop">
-            <img src="/media/multbilim-logo.png" alt="MultBilim" />
-          </span>
-          <span className="brand-studio">Animation studio</span>
-        </a>
-
-        <nav className="desktop-nav" aria-label="Asosiy navigatsiya">
-          <a href="#projects">Loyihalar</a>
-          <a href="#studio">Studio</a>
-          <a href="#services">Xizmatlar</a>
-          <a href="#watch">Tomosha</a>
-        </nav>
-
-        <a className="header-cta" href="#contact">
-          Bog‘lanish <span>↗</span>
-        </a>
-
-        <details className="mobile-menu">
-          <summary aria-label="Menyuni ochish">Menyu</summary>
-          <nav aria-label="Mobil navigatsiya">
-            <a href="#projects">Loyihalar</a>
-            <a href="#studio">Studio</a>
-            <a href="#services">Xizmatlar</a>
-            <a href="#watch">Tomosha</a>
-            <a href="#contact">Bog‘lanish</a>
-          </nav>
-        </details>
-      </header>
+      <SiteHeader />
 
       <section className="hero" id="top">
         <img
@@ -140,8 +38,10 @@ export default function Home() {
 
         <div className="hero-content">
           <p className="kicker"><span /> Toshkent · O‘zbekiston</p>
-          <h1>
-            O‘zbekistonda yaratilgan <em>olamlar.</em>
+          <h1 className="animated-title">
+            <span className="soft-word soft-word--one">O‘zbekistonda</span>{" "}
+            <span className="soft-word soft-word--two">yaratilgan</span>{" "}
+            <em className="soft-word soft-word--three">olamlar.</em>
           </h1>
           <p className="hero-copy">
             Mahalliy ruh, dunyo darajasidagi animatsiya. Biz bolalar va oilalar
@@ -151,13 +51,8 @@ export default function Home() {
             <a className="button button-primary" href="#projects">
               Olamlarni kashf eting <span>↓</span>
             </a>
-            <a
-              className="button button-ghost"
-              href="https://www.youtube.com/@BekvaLola"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="play-dot">▶</span> Showreel
+            <a className="button button-ghost hero-watch" href="#watch">
+              <span className="play-dot">▶</span> Pastda tomosha qiling
             </a>
           </div>
         </div>
@@ -177,7 +72,7 @@ export default function Home() {
         </div>
         <div className="intro-layout">
           <h2>
-            Animatsiya — bu chizish emas. Bu <em>vaqtni boshqarish.</em>
+            Animatsiya — bu chizish emas. Bu <em className="soft-word">vaqtni boshqarish.</em>
           </h2>
           <div className="intro-copy">
             <p>
@@ -199,16 +94,18 @@ export default function Home() {
             <h2>Bir studio. Olti xil olam.</h2>
           </div>
           <p className="section-note">
-            Milliy eposdan raqamli kelajakkacha — har bir loyiha o‘z ovozi,
-            ranglari va qahramonlariga ega.
+            Har bir kartani oching: loyiha hikoyasi, qahramonlari va qo‘shimcha
+            konsept materiallari alohida sahifada joylashgan.
           </p>
         </div>
 
         <div className="project-grid">
           {projects.map((project, index) => (
-            <article
+            <Link
               className={`project-card ${project.className}`}
-              key={project.title}
+              href={`/projects/${project.slug}`}
+              key={project.slug}
+              aria-label={`${project.title} loyihasini ochish`}
             >
               <img src={project.image} alt={`${project.title} loyihasi`} loading="lazy" />
               <div className="project-shade" />
@@ -219,12 +116,10 @@ export default function Home() {
                 <span className="project-meta">{project.meta}</span>
                 <div className="project-reveal">
                   <p>{project.description}</p>
-                  <a href="#contact" aria-label={`${project.title} haqida suhbatlashish`}>
-                    Loyihani muhokama qilish <span>↗</span>
-                  </a>
+                  <span className="project-open">Loyihani ochish <b>↗</b></span>
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
@@ -233,36 +128,12 @@ export default function Home() {
         <div className="watch-heading">
           <p className="kicker"><span /> Hozir efirda</p>
           <h2>Hikoyalar harakatda.</h2>
-          <a
-            href="https://www.youtube.com/@BekvaLola"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <p className="watch-note">Videoni bosing — shu sahifaning o‘zida ochiladi.</p>
+          <a href="https://www.youtube.com/@BekvaLola" target="_blank" rel="noreferrer">
             YouTube kanali <span>↗</span>
           </a>
         </div>
-
-        <div className="video-grid">
-          {videos.map((video, index) => (
-            <a
-              className={`video-card ${index === 0 ? "video-card--featured" : ""}`}
-              href={video.href}
-              target="_blank"
-              rel="noreferrer"
-              key={video.title}
-            >
-              <div className="video-visual">
-                <img src={video.image} alt="" loading="lazy" />
-                <span className="video-play">▶</span>
-                <span className="video-count">0{index + 1}</span>
-              </div>
-              <div className="video-info">
-                <span>{video.channel}</span>
-                <h3>{video.title}</h3>
-              </div>
-            </a>
-          ))}
-        </div>
+        <VideoGallery />
       </section>
 
       <section className="services section-shell" id="services">
@@ -323,38 +194,7 @@ export default function Home() {
         </a>
       </section>
 
-      <footer className="site-footer section-shell">
-        <div className="footer-brand">
-          <span className="brand-crop brand-crop--footer">
-            <img src="/media/multbilim-logo.png" alt="MultBilim" />
-          </span>
-          <p>O‘zbekistonda yaratilgan olamlar. Dunyo uchun hikoyalar.</p>
-        </div>
-        <div className="footer-links">
-          <div>
-            <span>Navigatsiya</span>
-            <a href="#projects">Loyihalar</a>
-            <a href="#studio">Studio</a>
-            <a href="#services">Xizmatlar</a>
-          </div>
-          <div>
-            <span>Tomosha</span>
-            <a href="https://www.youtube.com/@BekvaLola" target="_blank" rel="noreferrer">Bek va Lola ↗</a>
-            <a href="https://www.youtube.com/@yashilmakonuz" target="_blank" rel="noreferrer">Yashil makon ↗</a>
-          </div>
-          <div>
-            <span>Studio</span>
-            <a href="#contact">Hamkorlik</a>
-            <a href="#contact">Karyera</a>
-            <a href="#contact">Aloqa</a>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <span>© 2026 MultBilim Studio</span>
-          <span>Toshkent, O‘zbekiston</span>
-          <a href="#top">Yuqoriga ↑</a>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
