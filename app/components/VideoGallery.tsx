@@ -6,7 +6,6 @@ const channels = [
   {
     name: "Bek va Lola",
     description: "Gigiyena, sog‘lom odatlar va kundalik foydali ko‘nikmalarni quvnoq hikoyalarga aylantiradigan oilaviy loyiha.",
-    url: "https://www.youtube.com/@BekvaLola",
     stats: ["37,3 mln ko‘rish", "15+ epizod", "2 yil efirda"],
     videos: [
       { id: "BQy49Y12YDo", title: "Badantarbiya 2" },
@@ -16,7 +15,6 @@ const channels = [
   {
     name: "Yashil makon",
     description: "Tabiat, suv va energiyani asrashni bolalar tushunadigan sodda, rang-barang sarguzashtlarda o‘rgatadi.",
-    url: "https://www.youtube.com/@yashilmakonuz",
     stats: ["3,2 mln+ ko‘rish", "15+ epizod", "2025 boshlangan"],
     videos: [
       { id: "t7yvEtXFJqE", title: "Yashil makonga aylantiraylik" },
@@ -72,7 +70,6 @@ export function VideoGallery() {
                 </article>
               );
             })}
-            <a className="channel-more" href={channel.url} target="_blank" rel="noreferrer"><span>Barcha videolar</span><b>↗</b></a>
           </div>
         </section>
       ))}

@@ -1422,29 +1422,10 @@ button {
 .channel-stats span:nth-child(3) { animation-delay: -4s; }
 @keyframes chip-float { 50% { transform: translateY(-3px); border-color: rgba(255,201,40,.38); } }
 
-.video-grid--channel { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.video-grid--channel { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .video-grid--channel .video-card--featured { grid-column: auto; }
 .video-grid--channel .video-visual { aspect-ratio: 16/10; }
 .video-info h4 { margin: 7px 0 0; font-size: 19px; letter-spacing: -.025em; }
-
-.channel-more {
-  display: flex;
-  min-height: 84px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 22px;
-  border: 1px solid var(--line);
-  border-radius: 17px;
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  transition: border-color 220ms ease, color 220ms ease, transform 220ms ease;
-}
-
-.channel-more:hover { transform: translateY(-2px); border-color: var(--gold); color: var(--page-text); }
-.channel-more b { color: var(--gold); font-size: 20px; }
 
 .service-grid { grid-template-columns: repeat(5, 1fr); }
 .service-card { min-height: 480px; padding: 26px; }
@@ -1718,6 +1699,7 @@ button {
   .channel-stats { justify-content: flex-start; }
   .channel-stats small { text-align: left; }
   .video-grid--channel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .video-grid--channel > .video-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .process-heading h2 { grid-column: auto; }
   .process-grid { grid-template-columns: repeat(2, 1fr); }
   .process-grid li { border-left: 0; }
@@ -1815,6 +1797,7 @@ button {
   .channel-stats { display: grid; grid-template-columns: 1fr; width: 100%; }
   .channel-stats span { width: max-content; }
   .video-grid--channel { grid-template-columns: 1fr; }
+  .video-grid--channel > .video-card:last-child:nth-child(odd) { grid-column: auto; }
   .process-block { padding-top: 105px; }
   .process-heading h2 { font-size: 48px; }
   .process-grid { grid-template-columns: 1fr; }
