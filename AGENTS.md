@@ -295,6 +295,8 @@ Dashboard asosiy statistikasi:
 - Telegram orqali yuboriladigan brief matni HTML escape qilinsin;
 - destructive boshqaruv amallari tasdiqsiz qo‘shilmasin;
 - Telegram ishlamay qolsa brief D1 bazaga saqlanishi davom etsin.
+- Mini App `initDataUnsafe` qiymatiga ishonmasin; raw `initData` HMAC serverda tekshirilsin;
+- Mini App faqat Telegram admin allowlist uchun ma’lumot qaytarsin.
 
 ## 15. Database va migration
 

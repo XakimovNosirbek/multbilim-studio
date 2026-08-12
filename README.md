@@ -449,6 +449,8 @@ Bot imkoniyatlari:
 - yangi loyiha briefi kelganda tezkor bildirishnoma;
 - so‘nggi brieflar va o‘qilmaganlar soni;
 - sayt holati va himoyalangan web-admin havolasi.
+- Telegram ichida ochiladigan responsive Mini App dashboard;
+- Mini App foydalanuvchisini serverda Telegram `initData` imzosi orqali tekshirish.
 
 Production sozlamalari GitHub’da emas, hosting environment’ida saqlanadi: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_ADMIN_IDS`, `TELEGRAM_WEBHOOK_SECRET` va `PUBLIC_SITE_URL`. Webhook manzili: `/api/telegram/webhook`.
 
