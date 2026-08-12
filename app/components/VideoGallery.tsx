@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const channels = [
   {
@@ -24,55 +24,113 @@ const channels = [
   },
 ];
 
-export function VideoGallery() {
-  const [activeId, setActiveId] = useState<string | null>(null);
+function ChannelShowcase({ channel }: { channel: (typeof channels)[number] }) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const activeVideo = channel.videos[activeIndex];
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.28 },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!isVisible || isPaused || reduceMotion || channel.videos.length < 2) return;
+    const timer = window.setInterval(
+      () => setActiveIndex((current) => (current + 1) % channel.videos.length),
+      16000,
+    );
+    return () => window.clearInterval(timer);
+  }, [channel.videos.length, isPaused, isVisible]);
+
+  function selectVideo(index: number) {
+    setActiveIndex(index);
+    setIsPaused(true);
+  }
 
   return (
-    <div className="channel-stack">
-      {channels.map((channel) => (
-        <section className="channel-showcase" key={channel.name}>
-          <div className="channel-heading">
-            <div>
-              <p className="channel-label">YouTube original</p>
-              <h3>{channel.name}</h3>
-              <p>{channel.description}</p>
-            </div>
-            <div className="channel-stats">
-              <small>Loyiha formati</small>
-              {channel.stats.map((stat) => <span key={stat}>{stat}</span>)}
-            </div>
+    <section
+      className="channel-showcase steam-showcase"
+      ref={sectionRef}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+    >
+      <div className="channel-heading">
+        <div>
+          <p className="channel-label">YouTube original</p>
+          <h3>{channel.name}</h3>
+          <p>{channel.description}</p>
+        </div>
+        <div className="channel-stats">
+          <small>Loyiha formati</small>
+          {channel.stats.map((stat) => <span key={stat}>{stat}</span>)}
+        </div>
+      </div>
+
+      <div className="steam-stage">
+        <div className="steam-player">
+          {isVisible ? (
+            <iframe
+              key={activeVideo.id}
+              src={`https://www.youtube-nocookie.com/embed/${activeVideo.id}?autoplay=1&mute=1&controls=1&rel=0&playsinline=1`}
+              title={`${channel.name} — ${activeVideo.title}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          ) : (
+            <img src={`https://i.ytimg.com/vi/${activeVideo.id}/maxresdefault.jpg`} alt="" loading="lazy" />
+          )}
+          <div className="steam-player-caption">
+            <span>Hozir namoyishda</span>
+            <strong>{activeVideo.title}</strong>
           </div>
-          <div className="video-grid video-grid--channel">
-            {channel.videos.map((video, index) => {
-              const isPlaying = activeId === video.id;
-              return (
-                <article className={`video-card video-card--inline ${isPlaying ? "is-playing" : ""}`} key={video.id}>
-                  {isPlaying ? (
-                    <div className="video-visual video-visual--playing">
-                      <iframe
-                        src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`}
-                        title={`${channel.name} — ${video.title}`}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                      />
-                      <button className="video-inline-close" type="button" onClick={() => setActiveId(null)} aria-label="Videoni yopish">×</button>
-                    </div>
-                  ) : (
-                    <button className="video-trigger" type="button" onClick={() => setActiveId(video.id)} aria-label={`${video.title} videosini shu kartada ko‘rish`}>
-                      <div className="video-visual">
-                        <img src={`https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`} alt="" loading="lazy" />
-                        <span className="video-play">▶</span>
-                        <span className="video-count">0{index + 1}</span>
-                      </div>
-                    </button>
-                  )}
-                  <div className="video-info"><span>{channel.name}</span><h4>{video.title}</h4></div>
-                </article>
-              );
-            })}
+        </div>
+
+        <aside className="steam-details">
+          <div>
+            <span className="steam-kicker">MultBilim taqdim etadi</span>
+            <h4>{activeVideo.title}</h4>
+            <p>{channel.description}</p>
           </div>
-        </section>
-      ))}
-    </div>
+          <div className="steam-stills" aria-label={`${channel.name} video tanlovi`}>
+            {channel.videos.map((video, index) => (
+              <button
+                className={index === activeIndex ? "is-active" : ""}
+                type="button"
+                key={video.id}
+                onClick={() => selectVideo(index)}
+                aria-label={`${video.title} videosini ko‘rsatish`}
+                aria-pressed={index === activeIndex}
+              >
+                <img src={`https://i.ytimg.com/vi/${video.id}/mqdefault.jpg`} alt="" loading="lazy" />
+                <span>{video.title}</span>
+              </button>
+            ))}
+          </div>
+          <div className="steam-format">
+            {channel.stats.map((stat) => <span key={stat}>{stat}</span>)}
+          </div>
+          <p className="steam-hint">Video ovozsiz boshlanadi. Ovoz va to‘liq ekran boshqaruvi videoning o‘zida.</p>
+        </aside>
+      </div>
+
+      <div className="steam-dots" aria-hidden="true">
+        {channel.videos.map((video, index) => <i className={index === activeIndex ? "is-active" : ""} key={video.id} />)}
+      </div>
+    </section>
   );
+}
+
+export function VideoGallery() {
+  return <div className="channel-stack">{channels.map((channel) => <ChannelShowcase channel={channel} key={channel.name} />)}</div>;
 }
