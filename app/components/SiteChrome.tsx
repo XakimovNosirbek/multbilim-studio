@@ -5,8 +5,9 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <Link className="brand" href="/#top" aria-label="MultBilim bosh sahifasi">
-        <span className="brand-crop">
-          <img src="/media/multbilim-logo.png" alt="MultBilim" />
+        <span className="brand-mark" aria-hidden="true">
+          <span className="brand-word brand-word--mult" data-text="MULT">MULT</span>
+          <span className="brand-word brand-word--bilim" data-text="BiLiM">BiLiM</span>
         </span>
         <span className="brand-studio">Animation studio</span>
       </Link>
@@ -43,8 +44,9 @@ export function SiteFooter() {
   return (
     <footer className="site-footer section-shell">
       <div className="footer-brand">
-        <span className="brand-crop brand-crop--footer">
-          <img src="/media/multbilim-logo.png" alt="MultBilim" />
+        <span className="brand-mark brand-mark--footer" aria-label="MultBilim">
+          <span className="brand-word brand-word--mult" data-text="MULT">MULT</span>
+          <span className="brand-word brand-word--bilim" data-text="BiLiM">BiLiM</span>
         </span>
         <p>O‘zbekistonda yaratilgan olamlar. Dunyo uchun hikoyalar.</p>
       </div>
