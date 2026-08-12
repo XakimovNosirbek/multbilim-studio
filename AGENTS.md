@@ -286,6 +286,16 @@ Dashboard asosiy statistikasi:
 - referrer manbalari;
 - oxirgi anonim tashriflar.
 
+### Telegram admin-bot
+
+- webhook: `/api/telegram/webhook`;
+- webhook secret header serverda majburiy tekshirilsin;
+- bot faqat `TELEGRAM_ADMIN_IDS` allowlist foydalanuvchilariga javob bersin;
+- bot tokeni, webhook secret va admin ID repository’ga yozilmasin;
+- Telegram orqali yuboriladigan brief matni HTML escape qilinsin;
+- destructive boshqaruv amallari tasdiqsiz qo‘shilmasin;
+- Telegram ishlamay qolsa brief D1 bazaga saqlanishi davom etsin.
+
 ## 15. Database va migration
 
 Database Cloudflare D1 / SQLite asosida.

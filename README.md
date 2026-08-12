@@ -437,6 +437,23 @@ PDF materiallaridan olingan yoki loyiha bilan bog‘liq media faqat MultBilim ta
 
 ## Huquqlar
 
+## Telegram boshqaruvi
+
+Telegram admin-bot backend’i loyiha tarkibiga kiritilgan. Bot faqat ruxsat berilgan Telegram ID’lariga javob beradi va webhook so‘rovlari maxfiy kalit bilan tekshiriladi.
+
+Bot imkoniyatlari:
+
+- tugmali boshqaruv menyusi;
+- bugungi, 7 kunlik va 30 kunlik analitika;
+- mashhur sahifalar va qurilmalar hisoboti;
+- yangi loyiha briefi kelganda tezkor bildirishnoma;
+- so‘nggi brieflar va o‘qilmaganlar soni;
+- sayt holati va himoyalangan web-admin havolasi.
+
+Production sozlamalari GitHub’da emas, hosting environment’ida saqlanadi: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_ADMIN_IDS`, `TELEGRAM_WEBHOOK_SECRET` va `PUBLIC_SITE_URL`. Webhook manzili: `/api/telegram/webhook`.
+
+## Huquqlar
+
 © 2026 MultBilim Studio.
 
 MultBilim nomi, logotipi, personajlar, loyiha nomlari, konsept tasvirlar, videolar va boshqa media materiallar tegishli huquq egalariga tegishli. Repository’ning public ekanligi ushbu brend yoki media materiallardan erkin tijoriy foydalanish huquqini bermaydi.

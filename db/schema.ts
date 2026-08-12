@@ -18,3 +18,21 @@ export const analyticsVisits = sqliteTable(
     index("idx_analytics_visits_visitor_id").on(table.visitorId),
   ],
 );
+
+export const contactBriefs = sqliteTable(
+  "contact_briefs",
+  {
+    id: text("id").primaryKey(),
+    createdAt: integer("created_at").notNull(),
+    name: text("name").notNull(),
+    email: text("email").notNull(),
+    company: text("company"),
+    topic: text("topic").notNull(),
+    details: text("details").notNull(),
+    status: text("status").notNull().default("new"),
+  },
+  (table) => [
+    index("idx_contact_briefs_created_at").on(table.createdAt),
+    index("idx_contact_briefs_status").on(table.status),
+  ],
+);
