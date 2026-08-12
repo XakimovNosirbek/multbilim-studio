@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { GlobalScrollMotion } from "./components/GlobalScrollMotion";
+import { PrivacyCenter } from "./components/PrivacyCenter";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -61,7 +62,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body><GlobalScrollMotion />{children}</body>
+      <body><GlobalScrollMotion />{children}<PrivacyCenter /></body>
     </html>
   );
 }

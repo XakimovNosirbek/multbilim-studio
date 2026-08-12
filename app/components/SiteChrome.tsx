@@ -86,6 +86,11 @@ export function SiteFooter() {
         <span>Toshkent, O‘zbekiston</span>
         <a href="#top">Yuqoriga ↑</a>
       </div>
+      <div className="footer-privacy">
+        <button type="button" data-privacy-open>Maxfiylik tanlovlari</button>
+        <a href="/privacy">Maxfiylik siyosati</a>
+        <span>Anonim analitika faqat rozilik bilan</span>
+      </div>
     </footer>
   );
 }

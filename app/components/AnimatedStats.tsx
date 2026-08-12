@@ -35,7 +35,7 @@ export function AnimatedStats() {
       }
 
       setProgress(0);
-      const duration = 1450;
+      const duration = 2300;
       const startedAt = performance.now();
       const animate = (now: number) => {
         const elapsed = Math.min((now - startedAt) / duration, 1);
