@@ -34,7 +34,12 @@ async function validateInitData(initData: string): Promise<ValidationResult> {
   const dataKey = await crypto.subtle.importKey("raw", secretKey, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
   const calculatedHash = bytesToHex(await crypto.subtle.sign("HMAC", dataKey, encoder.encode(dataCheckString)));
   if (!secureEqual(calculatedHash, receivedHash)) return { user: null, error: "Telegram imzosi tasdiqlanmadi. Botdagi tugmadan qayta oching." };
-  const user = JSON.parse(params.get("user") ?? "null") as TelegramUser | null;
+  let user: TelegramUser | null = null;
+  try {
+    user = JSON.parse(params.get("user") ?? "null") as TelegramUser | null;
+  } catch {
+    return { user: null, error: "Telegram foydalanuvchisi aniqlanmadi" };
+  }
   if (!user?.id) return { user: null, error: "Telegram foydalanuvchisi aniqlanmadi" };
   const allowed = new Set((runtime.TELEGRAM_ADMIN_IDS ?? "").split(",").map((value) => value.trim()).filter(Boolean));
   if (!allowed.has(String(user.id))) return { user: null, error: `Telegram ID ${user.id} administratorlar ro‘yxatida yo‘q` };

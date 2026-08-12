@@ -1,42 +1,43 @@
+import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function SiteHeader() {
   return (
     <header className="site-header">
-      <a className="brand" href="/#top" aria-label="MultBilim bosh sahifasi">
+      <Link className="brand" href="/#top" aria-label="MultBilim bosh sahifasi">
         <span className="brand-mark" aria-hidden="true">
           <span className="brand-word brand-word--mult" data-text="MULT">MULT</span>
           <span className="brand-word brand-word--bilim" data-text="BiLiM">BiLiM</span>
         </span>
         <span className="brand-studio">Animation studio</span>
-      </a>
+      </Link>
 
       <nav className="desktop-nav" aria-label="Asosiy navigatsiya">
-        <a href="/#projects">Loyihalar</a>
-        <a href="/#studio">Studiya</a>
-        <a href="/#services">Xizmatlar</a>
-        <a href="/#careers">Karyera</a>
-        <a href="/#watch">Tomosha</a>
+        <Link href="/#projects">Loyihalar</Link>
+        <Link href="/#studio">Studiya</Link>
+        <Link href="/#services">Xizmatlar</Link>
+        <Link href="/#careers">Karyera</Link>
+        <Link href="/#watch">Tomosha</Link>
       </nav>
 
       <div className="header-actions">
         <ThemeToggle />
-        <a className="header-cta" href="/#contact">
+        <Link className="header-cta" href="/#contact">
           Bog‘lanish <span>↗</span>
-        </a>
+        </Link>
       </div>
 
       <details className="mobile-menu">
         <summary aria-label="Menyuni ochish">Menyu</summary>
         <nav aria-label="Mobil navigatsiya">
-          <a href="/#projects">Loyihalar</a>
-          <a href="/#studio">Studiya</a>
-          <a href="/#services">Xizmatlar</a>
-          <a href="/#technology">Ishlab chiqarish</a>
-          <a href="/#careers">Karyera</a>
-          <a href="/#faq">Savollar</a>
-          <a href="/#watch">Tomosha</a>
-          <a href="/#contact">Bog‘lanish</a>
+          <Link href="/#projects">Loyihalar</Link>
+          <Link href="/#studio">Studiya</Link>
+          <Link href="/#services">Xizmatlar</Link>
+          <Link href="/#technology">Ishlab chiqarish</Link>
+          <Link href="/#careers">Karyera</Link>
+          <Link href="/#faq">Savollar</Link>
+          <Link href="/#watch">Tomosha</Link>
+          <Link href="/#contact">Bog‘lanish</Link>
         </nav>
       </details>
     </header>
@@ -56,10 +57,10 @@ export function SiteFooter() {
       <div className="footer-links footer-links--expanded">
         <div>
           <span>Navigatsiya</span>
-          <a href="/#projects">Loyihalar</a>
-          <a href="/#studio">Studio</a>
-          <a href="/#services">Xizmatlar</a>
-          <a href="/#technology">Texnologiya</a>
+          <Link href="/#projects">Loyihalar</Link>
+          <Link href="/#studio">Studio</Link>
+          <Link href="/#services">Xizmatlar</Link>
+          <Link href="/#technology">Texnologiya</Link>
         </div>
         <div>
           <span>Tomosha</span>
@@ -68,25 +69,25 @@ export function SiteFooter() {
         </div>
         <div>
           <span>Studio</span>
-          <a href="/#team">Jamoa</a>
-          <a href="/#careers">Karyera</a>
-          <a href="/#faq">Savollar</a>
+          <Link href="/#team">Jamoa</Link>
+          <Link href="/#careers">Karyera</Link>
+          <Link href="/#faq">Savollar</Link>
         </div>
         <div>
           <span>Aloqa</span>
-          <a href="/#contact">Hamkorlik</a>
-          <a href="/#contact">Buyurtma</a>
-          <a href="/#contact">Aloqa</a>
+          <Link href="/#contact">Hamkorlik</Link>
+          <Link href="/#contact">Buyurtma</Link>
+          <Link href="/#contact">Aloqa</Link>
         </div>
       </div>
       <div className="footer-bottom">
         <span>© 2026 MultBilim Studio</span>
         <span>Toshkent, O‘zbekiston</span>
-        <a href="#top">Yuqoriga ↑</a>
+        <Link href="/#top">Yuqoriga ↑</Link>
       </div>
       <div className="footer-privacy">
         <button type="button" data-privacy-open>Maxfiylik tanlovlari</button>
-        <a href="/privacy">Maxfiylik siyosati</a>
+        <Link href="/privacy">Maxfiylik siyosati</Link>
         <span>Anonim analitika faqat rozilik bilan</span>
       </div>
     </footer>

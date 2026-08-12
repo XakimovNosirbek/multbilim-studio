@@ -224,6 +224,10 @@ Har bir sahifada loyiha uchun alohida hero, hikoya, faktlar, qadriyatlar, rasmla
 - [x] Open Graph ijtimoiy preview;
 - [x] public demo deployment;
 - [x] public GitHub repository.
+- [x] Telegram admin-bot va himoyalangan Telegram Mini App dashboard;
+- [x] saytning Telegram ichida ochiladigan Mini App ko‘rinishi;
+- [x] D1 bazaga saqlanadigan loyiha brieflari va Telegram bildirishnomalari;
+- [x] server-render smoke testlari va xatosiz lint gate.
 
 ## Real ma’lumot kelgach yangilanadigan joylar
 
@@ -435,8 +439,6 @@ PDF materiallaridan olingan yoki loyiha bilan bog‘liq media faqat MultBilim ta
 
 ---
 
-## Huquqlar
-
 ## Telegram boshqaruvi
 
 Telegram admin-bot backend’i loyiha tarkibiga kiritilgan. Bot faqat ruxsat berilgan Telegram ID’lariga javob beradi va webhook so‘rovlari maxfiy kalit bilan tekshiriladi.
@@ -453,6 +455,54 @@ Bot imkoniyatlari:
 - Mini App foydalanuvchisini serverda Telegram `initData` imzosi orqali tekshirish.
 
 Production sozlamalari GitHub’da emas, hosting environment’ida saqlanadi: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_ADMIN_IDS`, `TELEGRAM_WEBHOOK_SECRET` va `PUBLIC_SITE_URL`. Webhook manzili: `/api/telegram/webhook`.
+
+Telegram’dagi ikki asosiy tugma:
+
+- **Admin Dashboard** — `/telegram` Mini App’ini ochadi; server Telegram `initData` imzosini va ID allowlist’ini tekshiradi;
+- **MultBilim Website** — public saytni Telegram WebView ichida Mini App ko‘rinishida ochadi.
+
+Ruxsat berilgan foydalanuvchi avval botga shaxsiy chatda `/start` yuborishi kerak. Bot foydalanuvchi chatni boshlamaguncha unga xabar jo‘nata olmaydi.
+
+## Environment sozlamalari
+
+Repository’da xavfsiz namuna sifatida `.env.example` mavjud. Production’da quyidagi qiymatlar hosting secret/environment bo‘limida beriladi:
+
+| Kalit | Maxfiy | Vazifasi |
+|---|---:|---|
+| `PUBLIC_SITE_URL` | Yo‘q | Public saytning `https://...` asosiy manzili |
+| `MULTBILIM_ADMIN_EMAILS` | Ha | `/admin` uchun vergul bilan ajratilgan ChatGPT email allowlist |
+| `TELEGRAM_BOT_TOKEN` | Ha | BotFather bergan bot tokeni |
+| `TELEGRAM_ADMIN_IDS` | Ha | Telegram admin ID’lari, vergul bilan ajratiladi |
+| `TELEGRAM_WEBHOOK_SECRET` | Ha | Telegram webhook so‘rovlarini tekshiruvchi uzun random qiymat |
+
+Haqiqiy token, secret yoki email allowlist’ni `.env.example`, README, commit, issue yoki logga yozmang. Chatda yoki boshqa ochiq joyda ko‘ringan bot tokeni BotFather orqali darhol almashtirilishi kerak.
+
+## Production’ni qayta tiklash va deploy
+
+Loyiha statik GitHub Pages sayti emas. To‘liq funksiyalar uchun Cloudflare Workers-compatible runtime, D1 va Sites hosting kerak.
+
+1. Repository’ni clone qiling va Node.js `22.13+` bilan `npm ci` bajaring.
+2. `npm run lint` va `npm test` muvaffaqiyatli o‘tishini tekshiring.
+3. `.openai/hosting.json`dagi mavjud Sites `project_id` va `DB` logical binding’ini saqlang.
+4. Yangi Sites loyihasi faqat mavjud project’dan foydalanish imkoni mutlaqo bo‘lmaganda yaratiladi.
+5. Hosting environment’da yuqoridagi beshta qiymatni sozlang.
+6. `drizzle/` ichidagi uch migration ketma-ket qo‘llanishini tekshiring; ular analytics, brief va device platform ustunlarini yaratadi.
+7. Source’ni GitHub `main` va Sites source repository’ga push qiling.
+8. Aynan push qilingan commit’dan Sites version saqlang va mavjud public access’ga deploy qiling.
+9. Deploy tugagach public `/`, `/projects/alpomish`, `/privacy`, `/admin`, `/telegram` va API marshrutlarini smoke-test qiling.
+10. Telegram webhook’ni `PUBLIC_SITE_URL/api/telegram/webhook`ga `TELEGRAM_WEBHOOK_SECRET` bilan qayta ro‘yxatdan o‘tkazing.
+11. Bot menu button’ini `/telegram`ga, xabardagi Website tugmasini `PUBLIC_SITE_URL`ga `web_app` sifatida sozlang.
+
+`MULTBILIM_ADMIN_EMAILS` web `/admin` uchun, `TELEGRAM_ADMIN_IDS` esa Telegram Mini App uchun. Ular ikki mustaqil allowlist va bir-birini almashtirmaydi.
+
+## Tekshiruv holati va ma’lum cheklovlar
+
+- `npm run lint` error chiqarmaydi; media uchun oddiy `<img>` ishlatilgani sabab performance tavsiyalari warning bo‘lib qolishi mumkin.
+- `npm test` production build va bosh sahifa, loyiha, privacy server-render smoke testlarini bajaradi.
+- YouTube player iframe bo‘lgani uchun YouTube’ning o‘z overlay va boshqaruv elementlarini to‘liq olib tashlab bo‘lmaydi.
+- iPhone aniq modeli odatiy browser User-Agent orqali ishonchli aniqlanmaydi; dashboard `iPhone`, `Android`, `Windows`, `macOS` kabi platformani ko‘rsatadi va fingerprinting qilmaydi.
+- `npm audit`da `vinext/image-size` hamda migration CLI zanjirida upstream advisory qolishi mumkin. Ularni `--force` bilan mos kelmaydigan eski versiyaga tushirmang; Sites-compatible yangilanish chiqqanda alohida sinab yangilang.
+- Demo jamoa, statistika va ayrim matnlar studiya tomonidan tasdiqlanmaguncha rasmiy fakt emas.
 
 ## Huquqlar
 

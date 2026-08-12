@@ -463,3 +463,156 @@ Ish tugaganda foydalanuvchiga qisqa tarzda:
 ayting.
 
 Ichki buyruqlar, tokenlar, project ID, vaqtinchalik arxivlar yoki keraksiz texnik loglarni foydalanuvchiga chiqarmang.
+
+## 24. Amaldagi production topologiyasi
+
+Bu bo‘lim yangi agent loyihani kontekstsiz olganda qayta deploy qila olishi uchun yozilgan.
+
+```text
+GitHub main
+  └─ source of truth va public kod
+Sites source repository
+  └─ aynan deploy qilinadigan commit
+OpenAI Sites / Cloudflare-compatible worker
+  ├─ public web UI
+  ├─ server API routes
+  ├─ Sign in with ChatGPT dispatcher auth
+  └─ Cloudflare D1 logical binding: DB
+Telegram Bot API
+  ├─ webhook -> /api/telegram/webhook
+  ├─ Admin Mini App -> /telegram
+  └─ Website Mini App -> public site root
+```
+
+Asosiy GitHub remote nomi odatda `github`; Sites remote nomi odatda `sites`. `origin` mavjud deb taxmin qilmang — `git remote -v` bilan tekshiring.
+
+Amaldagi public demo URL README’da ko‘rsatilgan. Custom domain ishga tushganda `PUBLIC_SITE_URL`, Telegram tugmalari, webhook, canonical/social metadata va README birgalikda yangilanishi kerak.
+
+## 25. Environment va secret runbook
+
+Majburiy runtime qiymatlari:
+
+```text
+PUBLIC_SITE_URL
+MULTBILIM_ADMIN_EMAILS
+TELEGRAM_BOT_TOKEN
+TELEGRAM_ADMIN_IDS
+TELEGRAM_WEBHOOK_SECRET
+```
+
+Qoidalar:
+
+- haqiqiy qiymatlarni ushbu faylga, README’ga yoki Git’ga yozmang;
+- `.env.example`da faqat soxta namuna bo‘lsin;
+- `PUBLIC_SITE_URL` trailing slashsiz `https://` URL bo‘lsin;
+- email va Telegram ID ro‘yxatlari vergul bilan ajratiladi, parsing whitespace’ni tozalaydi;
+- bot tokeni oshkor bo‘lgan bo‘lsa BotFather orqali rotate qiling, hosting secret’ni yangilang, webhook’ni yangi token bilan qayta o‘rnating;
+- Telegram admin ID’ni qo‘shish web `/admin` ruxsatini bermaydi; web admin uchun email ham alohida qo‘shiladi;
+- environment o‘zgarishi aktiv bo‘lishi uchun yangi deployment kerak bo‘lishi mumkin.
+
+Hozir foydalanuvchi tasdiqlagan Telegram admin ID’lari soni uchta. Ularning qiymatini public hujjatda takrorlamang; amaldagi ro‘yxat hosting secret’idan olinadi.
+
+## 26. Noldan qayta deploy qilish tartibi
+
+1. `git status --short` va `git remote -v`ni tekshiring.
+2. `npm ci` ishlating; lockfile’ni sababsiz regeneratsiya qilmang.
+3. `npm run lint` bajaring. Error qolmasin; `<img>` performance warninglari mavjud dizayn/hosting qarori bo‘lishi mumkin.
+4. `npm test` bajaring. Bu build va server-render smoke testlarini ham bajaradi.
+5. `.openai/hosting.json`ni o‘qing. Undagi mavjud opaque `project_id`ni aynan ko‘chiring, yangi ID o‘ylab topmang.
+6. GitHub `main`ga normal push qiling. Force push qilmang.
+7. Sites connector orqali qisqa muddatli source credential oling. Tokenni remote URL yoki Git config’ga saqlamang; faqat bir buyruqlik HTTP header sifatida ishlating.
+8. Xuddi shu HEAD commit’ni Sites source `main` branch’iga push qiling.
+9. Sites packaging helper bilan `dist`, hosting metadata va migrationlarni arxivlang. Windows’da WSL bo‘lmasa Git Bash ishlatiladi.
+10. Push qilingan HEAD SHA va shu build bilan yangi Sites version saqlang.
+11. Sayt public bo‘lgani uchun deploy userning public publish roziligiga mos bo‘lishi kerak. Oldingi topshiriqlarda public deployga ruxsat berilgan, lekin yangi kontekstda access niyatini tekshiring.
+12. Deployment `succeeded` bo‘lguncha statusni tekshiring; muvaffaqiyatli URL’ni oching.
+13. Vaqtinchalik build archive’ni aniq yo‘lini tekshirgandan keyin o‘chiring; source/media’ni o‘chirmang.
+
+Sites archive upload vaqtincha ishlamasa, source commit asosida version saqlash platforma qo‘llasa shundan foydalanish mumkin. Buni odatiy yo‘l deb qabul qilmang; avval to‘liq archive yo‘lini sinang.
+
+## 27. D1 schema va migration tartibi
+
+Logical binding: `DB`.
+
+Migrationlar tartibini o‘zgartirmang:
+
+- `0000_skinny_wonder_man.sql` — anonim analytics bazasi;
+- `0001_kind_rumiko_fujikawa.sql` — contact brief yozuvlari;
+- `0002_fancy_white_tiger.sql` — aniq model emas, privacy-safe platform maydoni.
+
+Schema o‘zgarsa:
+
+1. `db/schema.ts`ni yangilang;
+2. `npm run db:generate` bajaring;
+3. generatsiya qilingan SQL’ni qo‘lda ko‘rib chiqing;
+4. destructive o‘zgarish bo‘lsa foydalanuvchidan tasdiq oling;
+5. build/test’dan keyin migration bilan deploy qiling;
+6. eski production ma’lumotlari saqlanganini tekshiring.
+
+## 28. Telegram Bot va Mini App runbook
+
+Server entrypoint’lar:
+
+```text
+app/api/telegram/webhook/route.ts     webhook auth va update qabul qilish
+lib/telegram.ts                       allowlist, tugmalar, hisobotlar, xabarlar
+app/telegram/TelegramDashboard.tsx    Mini App client UI
+app/api/telegram/dashboard/route.ts   initData HMAC va admin ID tekshiruvi
+```
+
+Webhook’ni sozlashda Bot API `setWebhook` chaqirig‘ida:
+
+- URL: `${PUBLIC_SITE_URL}/api/telegram/webhook`;
+- `secret_token`: aynan `TELEGRAM_WEBHOOK_SECRET`;
+- faqat HTTPS ishlating.
+
+Menu va xabar tugmalari:
+
+- Admin Dashboard — `web_app` URL `${PUBLIC_SITE_URL}/telegram`;
+- MultBilim Website — `web_app` URL `${PUBLIC_SITE_URL}`.
+
+Bot yangi adminga o‘zi birinchi bo‘lib yozolmaydi. Har bir admin avval botga shaxsiy chatdan `/start` yuborishi shart. “Chat not found” holati allowlist xatosi emas.
+
+Mini App auth:
+
+- client faqat raw `Telegram.WebApp.initData` yuboradi;
+- server bot-token HMAC bilan barcha maydonlarni tekshiradi; `hash` data-check-string’dan chiqariladi, yangi `signature` esa bot-token usulida qabul qilingan maydon sifatida qoladi;
+- `auth_date` eskirishi tekshiriladi;
+- imzo to‘g‘ri bo‘lgandan keyingina `user.id` allowlist bilan taqqoslanadi;
+- xato bo‘lsa response aniq sabab beradi, lekin token/secret chiqarmaydi.
+
+Bot webhook’ini o‘zgartirganda brief bazaga saqlanishi Telegram yetkazib berishga bog‘lanib qolmasin.
+
+## 29. Endpoint va xavfsizlik matriksasi
+
+| Route | Access | Muhim himoya |
+|---|---|---|
+| `/` va `/projects/*` | Public | privacy consent, input yo‘q |
+| `/privacy` | Public | policy va runtime bir xil bo‘lishi kerak |
+| `/admin` | ChatGPT login + email allowlist | server-side tekshiruv, noindex |
+| `/telegram` | Telegram ichida UI | ma’lumot API’dan signed initData bilan keladi |
+| `/api/analytics` | Same-origin POST | schema/length validation, consent clientdan oldin |
+| `/api/briefs` | Same-origin POST | email va length validation, D1 failure 503 |
+| `/api/telegram/dashboard` | Signed Telegram POST | HMAC, expiry, ID allowlist |
+| `/api/telegram/webhook` | Telegram POST | secret header majburiy |
+
+Rate limiting hozir infratuzilma darajasiga bog‘liq. Trafik oshsa `/api/briefs` va analytics uchun Cloudflare rate limiting yoki Turnstile qo‘shish tavsiya etiladi; yangi shaxsiy tracking qo‘shmang.
+
+## 30. Dependency xavfsizligi
+
+- React/RSC, Vite, Wrangler va Cloudflare plugin’ni compatible patch versiyalarda saqlang.
+- `npm audit fix --force` ishlatmang: u `vinext` yoki `drizzle-kit`ni mos kelmaydigan eski major versiyaga tushirishi mumkin.
+- Audit’dagi production/runtime advisory bilan faqat development CLI advisory’ni ajrating.
+- Upstream `vinext -> image-size` advisory compatible fix chiqmaguncha hujjatlashtirilgan ma’lum cheklovdir; sayt untrusted image upload/parsing qilmaydi.
+- Dependency yangilangandan keyin har doim lint, test va production buildni qayta bajaring.
+
+## 31. Hozirgi sifat bazasi
+
+- loyiha nomi package metadata’da `multbilim-studio`;
+- starter preview va starter testlari olib tashlangan;
+- smoke test bosh sahifa, olti loyiha linki, project va privacy renderini tekshiradi;
+- internal navigatsiya `next/link` orqali;
+- malformed Origin brief endpoint’ni yiqitmaydi;
+- malformed Telegram user JSON boshqarilgan 403 xato beradi;
+- aniq iPhone modeli ataylab aniqlanmaydi: privacy-safe platform darajasi saqlanadi;
+- YouTube iframe ichidagi native overlay’ni sayt to‘liq boshqara olmaydi.

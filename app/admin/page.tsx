@@ -1,5 +1,6 @@
 import type { CSSProperties, Metadata } from "react";
 import { env } from "cloudflare:workers";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { chatGPTSignOutPath, requireChatGPTUser } from "../chatgpt-auth";
 import { getAnalyticsDashboard } from "../../db/analytics-dashboard";
@@ -19,7 +20,7 @@ const pageNames: Record<string, string> = {
   "/projects/ikki-dunyo": "Ikki dunyo",
   "/projects/zij": "Zij",
   "/projects/megavoylar": "Megavoylar",
-  "/projects/sehrli-dalponcha": "Sehrli dalponcha",
+  "/projects/sehrli-qalpoqcha": "Sehrli qalpoqcha",
   "/projects/meva-cheva": "Meva-cheva",
 };
 
@@ -116,13 +117,13 @@ export default async function AdminPage() {
   return (
     <main className="admin-shell">
       <aside className="admin-sidebar">
-        <a className="admin-brand" href="/admin" aria-label="MultBilim admin bosh sahifasi">
+        <Link className="admin-brand" href="/admin" aria-label="MultBilim admin bosh sahifasi">
           <span className="brand-mark" aria-hidden="true">
             <span className="brand-word brand-word--mult" data-text="MULT">MULT</span>
             <span className="brand-word brand-word--bilim" data-text="BiLiM">BiLiM</span>
           </span>
           <span><strong>Studio</strong><small>Admin panel</small></span>
-        </a>
+        </Link>
 
         <nav className="admin-nav" aria-label="Admin navigatsiyasi">
           <a className="is-active" href="#overview"><span>⌂</span> Umumiy</a>
@@ -134,8 +135,8 @@ export default async function AdminPage() {
 
         <div className="admin-sidebar-bottom">
           <div className="admin-privacy-status"><span /> Analitika rozilik asosida</div>
-          <a href="/" target="_blank">Saytni ochish <span>↗</span></a>
-          <a href="/privacy" target="_blank">Maxfiylik siyosati <span>↗</span></a>
+          <Link href="/" target="_blank">Saytni ochish <span>↗</span></Link>
+          <Link href="/privacy" target="_blank">Maxfiylik siyosati <span>↗</span></Link>
         </div>
       </aside>
 
@@ -146,7 +147,7 @@ export default async function AdminPage() {
             <h1>Dashboard</h1>
           </div>
           <div className="admin-top-actions">
-            <a className="admin-refresh" href="/admin" aria-label="Statistikani yangilash">↻ <span>Yangilash</span></a>
+            <Link className="admin-refresh" href="/admin" aria-label="Statistikani yangilash">↻ <span>Yangilash</span></Link>
             <div className="admin-profile">
               <span>{user.displayName.slice(0, 1).toUpperCase()}</span>
               <div><strong>{user.fullName ?? "Administrator"}</strong><small>{user.email}</small></div>

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
 import { getProject, projects } from "../../data/projects";
@@ -51,7 +52,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <img src={project.image} alt={`${project.title} animatsion loyihasi`} />
         <div className="project-hero-shade" />
         <div className="project-hero-content section-shell">
-          <a className="project-back" href="/#projects">← Barcha loyihalar</a>
+          <Link className="project-back" href="/#projects">← Barcha loyihalar</Link>
           <p className="kicker"><span /> {project.eyebrow}</p>
           <h1 className="soft-word">{project.title}</h1>
           <p className="project-logline">{project.logline}</p>
@@ -109,20 +110,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </section>
 
       <nav className="project-switcher" aria-label="Boshqa loyihalar">
-        <a href={`/projects/${previous.slug}`}>
+        <Link href={`/projects/${previous.slug}`}>
           <span>← Oldingi loyiha</span>
           <strong>{previous.title}</strong>
-        </a>
-        <a href={`/projects/${next.slug}`}>
+        </Link>
+        <Link href={`/projects/${next.slug}`}>
           <span>Keyingi loyiha →</span>
           <strong>{next.title}</strong>
-        </a>
+        </Link>
       </nav>
 
       <section className="project-cta section-shell">
         <p className="kicker"><span /> Hamkorlik</p>
         <h2>Bu olamning keyingi bosqichini birga yarataylik.</h2>
-        <a className="button button-primary" href="/#contact">Loyihani muhokama qilish <span>↗</span></a>
+        <Link className="button button-primary" href="/#contact">Loyihani muhokama qilish <span>↗</span></Link>
       </section>
 
       <SiteFooter />
