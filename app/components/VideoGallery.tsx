@@ -122,10 +122,9 @@ function ChannelShowcase({ channel }: { channel: (typeof channels)[number] }) {
           </div>
           <p className="steam-hint">Video ovozsiz boshlanadi. Ovoz va to‘liq ekran boshqaruvi videoning o‘zida.</p>
         </aside>
-      </div>
-
-      <div className="steam-dots" aria-hidden="true">
-        {channel.videos.map((video, index) => <i className={index === activeIndex ? "is-active" : ""} key={video.id} />)}
+        <div className="steam-dots" aria-hidden="true">
+          {channel.videos.map((video, index) => <i className={index === activeIndex ? "is-active" : ""} key={video.id} />)}
+        </div>
       </div>
     </section>
   );

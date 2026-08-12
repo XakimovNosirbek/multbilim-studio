@@ -63,7 +63,7 @@ export default function Home() {
           </h1>
           <p className="hero-copy">Mahalliy ruh, dunyo darajasidagi animatsiya. Biz bolalar va oilalar sevib qoladigan qahramonlarni yaratamiz.</p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#watch"><span className="play-dot">▶</span> Ishlarni tomosha qiling</a>
+            <a className="button button-primary" href="#watch"><span className="play-dot" aria-hidden="true" /> Ishlarni tomosha qiling</a>
             <a className="button button-ghost hero-watch" href="#projects">Loyihalarni kashf eting <span>↓</span></a>
           </div>
         </div>

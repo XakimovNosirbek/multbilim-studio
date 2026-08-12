@@ -434,6 +434,8 @@ button {
   color: #0b0e14;
 }
 
+.hero-actions .button-primary { gap: 11px; }
+
 .button-ghost {
   gap: 12px;
   border-color: rgba(255,255,255,.2);
@@ -442,15 +444,17 @@ button {
 }
 
 .play-dot {
-  display: grid;
+  display: inline-grid;
+  flex: 0 0 auto;
   width: 30px;
   height: 30px;
   place-items: center;
   border-radius: 999px;
   background: var(--paper);
   color: #10141d;
-  font-size: 9px;
+  box-shadow: 0 4px 14px rgba(8, 12, 20, .12);
 }
+.play-dot::before { width: 0; height: 0; margin-left: 2px; border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-left: 6px solid currentColor; content: ""; }
 
 .hero-index {
   position: absolute;
@@ -1556,7 +1560,7 @@ button {
 .steam-format { display: flex; flex-wrap: wrap; gap: 6px; }
 .steam-format span { padding: 7px 9px; border-radius: 999px; background: var(--soft-panel); color: var(--muted); font-size: 7px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .steam-hint { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
-.steam-dots { display: flex; justify-content: center; gap: 5px; padding-top: 14px; }
+.steam-dots { display: flex; grid-column: 1 / -1; justify-content: center; gap: 5px; padding: 13px 20px; border-top: 1px solid var(--line); background: var(--panel); }
 .steam-dots i { width: 22px; height: 4px; border-radius: 999px; background: var(--line); transition: width 650ms cubic-bezier(.22,1,.36,1), background 500ms ease; }
 .steam-dots i.is-active { width: 42px; background: var(--gold); }
 
