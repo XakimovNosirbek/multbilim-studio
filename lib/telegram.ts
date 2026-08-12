@@ -23,9 +23,8 @@ const keyboard = () => ({ inline_keyboard: [
   [{ text: "📊 Bugun", callback_data: "today" }, { text: "📈 7 kun", callback_data: "week" }, { text: "🗓 30 kun", callback_data: "month" }],
   [{ text: "🎬 Sahifalar", callback_data: "pages" }, { text: "📱 Qurilmalar", callback_data: "devices" }],
   [{ text: "✉️ Brieflar", callback_data: "briefs" }, { text: "🟢 Sayt holati", callback_data: "status" }],
-  [{ text: "📱 Mini App dashboard", web_app: { url: `${runtime().PUBLIC_SITE_URL ?? "https://multbilim-studio-demo.nosirbekxakimov01.chatgpt.site"}/telegram` } }],
-  [{ text: "🔐 Web admin", url: `${runtime().PUBLIC_SITE_URL ?? "https://multbilim-studio-demo.nosirbekxakimov01.chatgpt.site"}/admin` }],
-  [{ text: "🌐 MultBilim saytini ochish", url: runtime().PUBLIC_SITE_URL ?? "https://multbilim-studio-demo.nosirbekxakimov01.chatgpt.site" }],
+  [{ text: "📊 Admin Dashboard", web_app: { url: `${runtime().PUBLIC_SITE_URL ?? "https://multbilim-studio-demo.nosirbekxakimov01.chatgpt.site"}/telegram` } }],
+  [{ text: "🌐 MultBilim Website", url: runtime().PUBLIC_SITE_URL ?? "https://multbilim-studio-demo.nosirbekxakimov01.chatgpt.site" }],
 ] });
 
 function n(value: number) { return new Intl.NumberFormat("uz-UZ", { maximumFractionDigits: 1 }).format(value); }
