@@ -14,8 +14,10 @@ export function SiteHeader() {
 
       <nav className="desktop-nav" aria-label="Asosiy navigatsiya">
         <Link href="/#projects">Loyihalar</Link>
-        <Link href="/#studio">Studio</Link>
         <Link href="/#services">Xizmatlar</Link>
+        <Link href="/#technology">Texnologiya</Link>
+        <Link href="/#team">Jamoa</Link>
+        <Link href="/#careers">Karyera</Link>
         <Link href="/#watch">Tomosha</Link>
       </nav>
 
@@ -32,6 +34,10 @@ export function SiteHeader() {
           <Link href="/#projects">Loyihalar</Link>
           <Link href="/#studio">Studio</Link>
           <Link href="/#services">Xizmatlar</Link>
+          <Link href="/#technology">Texnologiya</Link>
+          <Link href="/#team">Jamoa</Link>
+          <Link href="/#careers">Karyera</Link>
+          <Link href="/#faq">Savollar</Link>
           <Link href="/#watch">Tomosha</Link>
           <Link href="/#contact">Bog‘lanish</Link>
         </nav>
@@ -50,12 +56,13 @@ export function SiteFooter() {
         </span>
         <p>O‘zbekistonda yaratilgan olamlar. Dunyo uchun hikoyalar.</p>
       </div>
-      <div className="footer-links">
+      <div className="footer-links footer-links--expanded">
         <div>
           <span>Navigatsiya</span>
           <Link href="/#projects">Loyihalar</Link>
           <Link href="/#studio">Studio</Link>
           <Link href="/#services">Xizmatlar</Link>
+          <Link href="/#technology">Texnologiya</Link>
         </div>
         <div>
           <span>Tomosha</span>
@@ -64,8 +71,14 @@ export function SiteFooter() {
         </div>
         <div>
           <span>Studio</span>
-          <Link href="/#contact">Hamkorlik</Link>
-          <Link href="/#contact">Karyera</Link>
+          <Link href="/#team">Jamoa</Link>
+          <Link href="/#careers">Karyera</Link>
+          <Link href="/#faq">Savollar</Link>
+        </div>
+        <div>
+          <span>Aloqa</span>
+          <a href="mailto:hello@multbilim.uz">Hamkorlik</a>
+          <a href="mailto:loyiha@multbilim.uz">Buyurtma</a>
           <Link href="/#contact">Aloqa</Link>
         </div>
       </div>
