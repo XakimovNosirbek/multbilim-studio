@@ -5,19 +5,19 @@ import { VideoGallery } from "./components/VideoGallery";
 import { projects } from "./data/projects";
 
 const services = [
-  { number: "01", title: "Serial ishlab chiqarish", text: "Bibliya, personaj dizayni, pilot va epizodlar — telekanal hamda platformalar uchun to‘liq sikl." },
-  { number: "02", title: "Ta’limiy animatsiya", text: "Vazirliklar, nashriyotlar va tashkilotlar uchun bolaga tushunarli ijtimoiy-ta’limiy kontent." },
-  { number: "03", title: "Brend roliklari", text: "15–60 soniyalik cinematic reklama, tushuntiruvchi animatsiya va kampaniya vizuallari." },
-  { number: "04", title: "Ovoz va musiqa", text: "Dublyaj, ovoz dizayni, original qo‘shiqlar va final miks — bitta ijodiy tizimda." },
-  { number: "05", title: "Lokalizatsiya", text: "O‘zbek, rus, ingliz va qoraqalpoq tillarida dublyaj, subtitr va matnli grafika." },
+  { number: "01", title: "Serial ishlab chiqarish", text: "Bibliya, personaj dizayni, pilot va epizodlar — telekanal hamda platformalar uchun to‘liq sikl.", image: "/media/alpomish.jpg" },
+  { number: "02", title: "Ta’limiy animatsiya", text: "Vazirliklar, nashriyotlar va tashkilotlar uchun bolaga tushunarli ijtimoiy-ta’limiy kontent.", image: "/media/zij.jpg" },
+  { number: "03", title: "Brend roliklari", text: "15–60 soniyalik cinematic reklama, tushuntiruvchi animatsiya va kampaniya vizuallari.", image: "/media/megavoylar.jpg" },
+  { number: "04", title: "Ovoz va musiqa", text: "Dublyaj, ovoz dizayni, original qo‘shiqlar va final miks — bitta ijodiy tizimda.", image: "/media/meva-cheva.jpg" },
+  { number: "05", title: "Lokalizatsiya", text: "O‘zbek, rus, ingliz va qoraqalpoq tillarida dublyaj, subtitr va matnli grafika.", image: "/media/ikki-dunyo.jpg" },
 ];
 
 const process = [
-  { number: "01", title: "Ssenariy", text: "G‘oyani dramatik hikoya va aniq ishlab chiqarish rejasiga aylantiramiz." },
-  { number: "02", title: "Storibord", text: "Har kadr, kamera va personaj harakatini oldindan chizamiz." },
-  { number: "03", title: "Animatik", text: "Tasvir, vaqt, dialog va musiqani birinchi marta birlashtiramiz." },
-  { number: "04", title: "Animatsiya", text: "Model, rig, fon, yorug‘lik va qahramon harakati jonlanadi." },
-  { number: "05", title: "Post", text: "Rang, effekt, ovoz miksi va yakuniy sifat nazorati bajariladi." },
+  { number: "01", title: "Ssenariy", text: "G‘oyani dramatik hikoya va aniq ishlab chiqarish rejasiga aylantiramiz.", image: "/media/projects/ikki-dunyo/gallery-1.jpg" },
+  { number: "02", title: "Storibord", text: "Har kadr, kamera va personaj harakatini oldindan chizamiz.", image: "/media/projects/alpomish/gallery-3.jpg" },
+  { number: "03", title: "Animatik", text: "Tasvir, vaqt, dialog va musiqani birinchi marta birlashtiramiz.", image: "/media/projects/zij/gallery-4.jpg" },
+  { number: "04", title: "Animatsiya", text: "Model, rig, fon, yorug‘lik va qahramon harakati jonlanadi.", image: "/media/projects/megavoylar/gallery-2.jpg" },
+  { number: "05", title: "Post", text: "Rang, effekt, ovoz miksi va yakuniy sifat nazorati bajariladi.", image: "/media/projects/meva-cheva/gallery-4.jpg" },
 ];
 
 const technologies = [
@@ -124,13 +124,16 @@ export default function Home() {
         </div>
         <div className="service-grid">
           {services.map((service) => (
-            <article className="service-card" key={service.number}><span>{service.number}</span><div><h3>{service.title}</h3><p>{service.text}</p></div><span className="service-arrow">↗</span></article>
+            <article className="service-card" key={service.number}>
+              <img className="service-visual" src={service.image} alt={`${service.title} uchun MultBilim vizuali`} loading="lazy" />
+              <span>{service.number}</span><div><h3>{service.title}</h3><p>{service.text}</p></div><span className="service-arrow">↗</span>
+            </article>
           ))}
         </div>
         <div className="process-block scroll-reveal">
           <div className="process-heading"><p className="kicker"><span /> Qanday ishlaymiz</p><h2>Besh bosqich. Bitta sifat.</h2></div>
           <ol className="process-grid">
-            {process.map((item) => <li key={item.number}><strong>{item.number}</strong><h3>{item.title}</h3><p>{item.text}</p></li>)}
+            {process.map((item) => <li key={item.number}><strong>{item.number}</strong><div className="process-visual"><img src={item.image} alt={`${item.title} bosqichi vizuali`} loading="lazy" /></div><h3>{item.title}</h3><p>{item.text}</p></li>)}
           </ol>
         </div>
       </section>

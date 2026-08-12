@@ -47,8 +47,8 @@ export function GlobalScrollMotion() {
 
     elements.forEach((element, index) => {
       element.classList.add("scroll-motion-item");
-      element.style.setProperty("--scroll-motion-delay", `${(index % 5) * 45}ms`);
-      element.style.setProperty("--scroll-motion-y", "18px");
+      element.style.setProperty("--scroll-motion-delay", `${(index % 5) * 70}ms`);
+      element.style.setProperty("--scroll-motion-y", "24px");
       element.style.setProperty("--scroll-live-y", "0px");
     });
 
@@ -64,7 +64,7 @@ export function GlobalScrollMotion() {
         const rect = element.getBoundingClientRect();
         const center = rect.top + rect.height / 2;
         const normalized = Math.max(-1, Math.min(1, (center - viewportHeight / 2) / (viewportHeight / 2)));
-        element.style.setProperty("--scroll-live-y", `${(-normalized * 5).toFixed(2)}px`);
+        element.style.setProperty("--scroll-live-y", `${(-normalized * 3).toFixed(2)}px`);
       });
     };
 
@@ -75,7 +75,7 @@ export function GlobalScrollMotion() {
 
       if (nextDirection !== scrollDirection) {
         scrollDirection = nextDirection;
-        const offset = scrollDirection === "down" ? "18px" : "-18px";
+        const offset = scrollDirection === "down" ? "24px" : "-24px";
         elements.forEach((element) => {
           if (!element.classList.contains("is-visible")) {
             element.style.setProperty("--scroll-motion-y", offset);
@@ -95,7 +95,7 @@ export function GlobalScrollMotion() {
           if (entry.isIntersecting) {
             element.style.setProperty(
               "--scroll-motion-y",
-              scrollDirection === "down" ? "18px" : "-18px",
+              scrollDirection === "down" ? "24px" : "-24px",
             );
             visibleElements.add(element);
             element.classList.add("is-visible");
@@ -107,7 +107,7 @@ export function GlobalScrollMotion() {
           }
         });
       },
-      { rootMargin: "-3% 0px -8%", threshold: 0.06 },
+      { rootMargin: "-5% 0px -10%", threshold: 0.08 },
     );
 
     elements.forEach((element) => observer.observe(element));

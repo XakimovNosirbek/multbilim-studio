@@ -1,45 +1,44 @@
-import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function SiteHeader() {
   return (
     <header className="site-header">
-      <Link className="brand" href="/#top" aria-label="MultBilim bosh sahifasi">
+      <a className="brand" href="/#top" aria-label="MultBilim bosh sahifasi">
         <span className="brand-mark" aria-hidden="true">
           <span className="brand-word brand-word--mult" data-text="MULT">MULT</span>
           <span className="brand-word brand-word--bilim" data-text="BiLiM">BiLiM</span>
         </span>
         <span className="brand-studio">Animation studio</span>
-      </Link>
+      </a>
 
       <nav className="desktop-nav" aria-label="Asosiy navigatsiya">
-        <Link href="/#projects">Loyihalar</Link>
-        <Link href="/#services">Xizmatlar</Link>
-        <Link href="/#technology">Texnologiya</Link>
-        <Link href="/#team">Jamoa</Link>
-        <Link href="/#careers">Karyera</Link>
-        <Link href="/#watch">Tomosha</Link>
+        <a href="/#projects">Loyihalar</a>
+        <a href="/#services">Xizmatlar</a>
+        <a href="/#technology">Texnologiya</a>
+        <a href="/#team">Jamoa</a>
+        <a href="/#careers">Karyera</a>
+        <a href="/#watch">Tomosha</a>
       </nav>
 
       <div className="header-actions">
         <ThemeToggle />
-        <Link className="header-cta" href="/#contact">
+        <a className="header-cta" href="/#contact">
           Bog‘lanish <span>↗</span>
-        </Link>
+        </a>
       </div>
 
       <details className="mobile-menu">
         <summary aria-label="Menyuni ochish">Menyu</summary>
         <nav aria-label="Mobil navigatsiya">
-          <Link href="/#projects">Loyihalar</Link>
-          <Link href="/#studio">Studio</Link>
-          <Link href="/#services">Xizmatlar</Link>
-          <Link href="/#technology">Texnologiya</Link>
-          <Link href="/#team">Jamoa</Link>
-          <Link href="/#careers">Karyera</Link>
-          <Link href="/#faq">Savollar</Link>
-          <Link href="/#watch">Tomosha</Link>
-          <Link href="/#contact">Bog‘lanish</Link>
+          <a href="/#projects">Loyihalar</a>
+          <a href="/#studio">Studio</a>
+          <a href="/#services">Xizmatlar</a>
+          <a href="/#technology">Texnologiya</a>
+          <a href="/#team">Jamoa</a>
+          <a href="/#careers">Karyera</a>
+          <a href="/#faq">Savollar</a>
+          <a href="/#watch">Tomosha</a>
+          <a href="/#contact">Bog‘lanish</a>
         </nav>
       </details>
     </header>
@@ -59,10 +58,10 @@ export function SiteFooter() {
       <div className="footer-links footer-links--expanded">
         <div>
           <span>Navigatsiya</span>
-          <Link href="/#projects">Loyihalar</Link>
-          <Link href="/#studio">Studio</Link>
-          <Link href="/#services">Xizmatlar</Link>
-          <Link href="/#technology">Texnologiya</Link>
+          <a href="/#projects">Loyihalar</a>
+          <a href="/#studio">Studio</a>
+          <a href="/#services">Xizmatlar</a>
+          <a href="/#technology">Texnologiya</a>
         </div>
         <div>
           <span>Tomosha</span>
@@ -71,15 +70,15 @@ export function SiteFooter() {
         </div>
         <div>
           <span>Studio</span>
-          <Link href="/#team">Jamoa</Link>
-          <Link href="/#careers">Karyera</Link>
-          <Link href="/#faq">Savollar</Link>
+          <a href="/#team">Jamoa</a>
+          <a href="/#careers">Karyera</a>
+          <a href="/#faq">Savollar</a>
         </div>
         <div>
           <span>Aloqa</span>
           <a href="mailto:hello@multbilim.uz">Hamkorlik</a>
           <a href="mailto:loyiha@multbilim.uz">Buyurtma</a>
-          <Link href="/#contact">Aloqa</Link>
+          <a href="/#contact">Aloqa</a>
         </div>
       </div>
       <div className="footer-bottom">
