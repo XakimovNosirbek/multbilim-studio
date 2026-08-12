@@ -82,10 +82,10 @@ function ChannelShowcase({ channel }: { channel: (typeof channels)[number] }) {
           {isVisible ? (
             <iframe
               key={activeVideo.id}
-              src={`https://www.youtube-nocookie.com/embed/${activeVideo.id}?autoplay=1&mute=1&controls=1&rel=0&playsinline=1`}
+              src={`https://www.youtube-nocookie.com/embed/${activeVideo.id}?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&rel=0&playsinline=1&loop=1&playlist=${activeVideo.id}`}
               title={`${channel.name} — ${activeVideo.title}`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
+              tabIndex={-1}
             />
           ) : (
             <img src={`https://i.ytimg.com/vi/${activeVideo.id}/maxresdefault.jpg`} alt="" loading="lazy" />
@@ -120,7 +120,7 @@ function ChannelShowcase({ channel }: { channel: (typeof channels)[number] }) {
           <div className="steam-format">
             {channel.stats.map((stat) => <span key={stat}>{stat}</span>)}
           </div>
-          <p className="steam-hint">Video ovozsiz boshlanadi. Ovoz va to‘liq ekran boshqaruvi videoning o‘zida.</p>
+          <p className="steam-hint">Video ovozsiz, uzluksiz fon namoyishi sifatida ijro etiladi.</p>
         </aside>
       </div>
 
