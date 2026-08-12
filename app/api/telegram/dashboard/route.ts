@@ -15,32 +15,38 @@ function secureEqual(left: string, right: string) {
   return difference === 0;
 }
 
-async function validateInitData(initData: string) {
+type TelegramUser = { id?: number; first_name?: string; last_name?: string; username?: string };
+type ValidationResult = { user: TelegramUser | null; error: string | null };
+
+async function validateInitData(initData: string): Promise<ValidationResult> {
   const runtime = env as RuntimeEnv;
-  if (!runtime.TELEGRAM_BOT_TOKEN) return null;
+  if (!runtime.TELEGRAM_BOT_TOKEN) return { user: null, error: "Telegram sozlamalari topilmadi" };
   const params = new URLSearchParams(initData);
   const receivedHash = params.get("hash") ?? "";
   const authDate = Number(params.get("auth_date"));
-  if (!receivedHash || !authDate || Math.abs(Date.now() / 1000 - authDate) > 3600) return null;
-  params.delete("hash"); params.delete("signature");
+  if (!receivedHash || !authDate) return { user: null, error: "Telegram sessiyasi noto‘g‘ri" };
+  if (Math.abs(Date.now() / 1000 - authDate) > 86400) return { user: null, error: "Telegram sessiyasi eskirgan. Mini App’ni qayta oching." };
+  params.delete("hash");
   const dataCheckString = [...params.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => `${key}=${value}`).join("\n");
   const encoder = new TextEncoder();
   const webAppKey = await crypto.subtle.importKey("raw", encoder.encode("WebAppData"), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
   const secretKey = await crypto.subtle.sign("HMAC", webAppKey, encoder.encode(runtime.TELEGRAM_BOT_TOKEN));
   const dataKey = await crypto.subtle.importKey("raw", secretKey, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
   const calculatedHash = bytesToHex(await crypto.subtle.sign("HMAC", dataKey, encoder.encode(dataCheckString)));
-  if (!secureEqual(calculatedHash, receivedHash)) return null;
-  const user = JSON.parse(params.get("user") ?? "null") as { id?: number; first_name?: string; last_name?: string; username?: string } | null;
+  if (!secureEqual(calculatedHash, receivedHash)) return { user: null, error: "Telegram imzosi tasdiqlanmadi. Botdagi tugmadan qayta oching." };
+  const user = JSON.parse(params.get("user") ?? "null") as TelegramUser | null;
+  if (!user?.id) return { user: null, error: "Telegram foydalanuvchisi aniqlanmadi" };
   const allowed = new Set((runtime.TELEGRAM_ADMIN_IDS ?? "").split(",").map((value) => value.trim()).filter(Boolean));
-  return user?.id && allowed.has(String(user.id)) ? user : null;
+  if (!allowed.has(String(user.id))) return { user: null, error: `Telegram ID ${user.id} administratorlar ro‘yxatida yo‘q` };
+  return { user, error: null };
 }
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null) as { initData?: string; days?: number } | null;
   if (!body?.initData) return Response.json({ error: "Telegram orqali oching" }, { status: 401 });
-  const user = await validateInitData(body.initData);
-  if (!user) return Response.json({ error: "Ruxsat berilmagan" }, { status: 403 });
+  const validation = await validateInitData(body.initData);
+  if (!validation.user) return Response.json({ error: validation.error ?? "Ruxsat berilmagan" }, { status: 403 });
   const days = body.days === 1 || body.days === 7 ? body.days : 30;
   const [analytics, briefs] = await Promise.all([getAnalyticsDashboard(days), getBriefSummary(6)]);
-  return Response.json({ user, analytics, briefs });
+  return Response.json({ user: validation.user, analytics, briefs });
 }

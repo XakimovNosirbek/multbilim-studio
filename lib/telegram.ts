@@ -24,7 +24,7 @@ const keyboard = () => ({ inline_keyboard: [
   [{ text: "🎬 Sahifalar", callback_data: "pages" }, { text: "📱 Qurilmalar", callback_data: "devices" }],
   [{ text: "✉️ Brieflar", callback_data: "briefs" }, { text: "🟢 Sayt holati", callback_data: "status" }],
   [{ text: "📊 Admin Dashboard", web_app: { url: `${runtime().PUBLIC_SITE_URL ?? "https://multbilim-studio-demo.nosirbekxakimov01.chatgpt.site"}/telegram` } }],
-  [{ text: "🌐 MultBilim Website", url: runtime().PUBLIC_SITE_URL ?? "https://multbilim-studio-demo.nosirbekxakimov01.chatgpt.site" }],
+  [{ text: "🌐 MultBilim Website", web_app: { url: runtime().PUBLIC_SITE_URL ?? "https://multbilim-studio-demo.nosirbekxakimov01.chatgpt.site" } }],
 ] });
 
 function n(value: number) { return new Intl.NumberFormat("uz-UZ", { maximumFractionDigits: 1 }).format(value); }
