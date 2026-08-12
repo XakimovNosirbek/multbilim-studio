@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const channels = [
   {
@@ -26,88 +26,56 @@ const channels = [
   },
 ];
 
-type ActiveVideo = { id: string; title: string; channel: string } | null;
-
 export function VideoGallery() {
-  const [activeVideo, setActiveVideo] = useState<ActiveVideo>(null);
-
-  useEffect(() => {
-    if (!activeVideo) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveVideo(null);
-    };
-    window.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [activeVideo]);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
-    <>
-      <div className="channel-stack">
-        {channels.map((channel) => (
-          <section className="channel-showcase" key={channel.name}>
-            <div className="channel-heading">
-              <div>
-                <p className="channel-label">YouTube original</p>
-                <h3>{channel.name}</h3>
-                <p>{channel.description}</p>
-              </div>
-              <div className="channel-stats">
-                <small>Demo statistika</small>
-                {channel.stats.map((stat) => <span key={stat}>{stat}</span>)}
-              </div>
+    <div className="channel-stack">
+      {channels.map((channel) => (
+        <section className="channel-showcase" key={channel.name}>
+          <div className="channel-heading">
+            <div>
+              <p className="channel-label">YouTube original</p>
+              <h3>{channel.name}</h3>
+              <p>{channel.description}</p>
             </div>
-            <div className="video-grid video-grid--channel">
-              {channel.videos.map((video, index) => (
-                <button
-                  className="video-card"
-                  type="button"
-                  onClick={() => setActiveVideo({ ...video, channel: channel.name })}
-                  key={video.id}
-                  aria-label={`${video.title} videosini shu sahifada ko‘rish`}
-                >
-                  <div className="video-visual">
-                    <img src={`https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`} alt="" loading="lazy" />
-                    <span className="video-play">▶</span>
-                    <span className="video-count">0{index + 1}</span>
-                  </div>
-                  <div className="video-info">
-                    <span>{channel.name}</span>
-                    <h4>{video.title}</h4>
-                  </div>
-                </button>
-              ))}
-              <a className="channel-more" href={channel.url} target="_blank" rel="noreferrer">
-                <span>Barcha videolar</span><b>↗</b>
-              </a>
-            </div>
-          </section>
-        ))}
-      </div>
-
-      {activeVideo && (
-        <div className="video-modal" role="dialog" aria-modal="true" aria-label={`${activeVideo.title} video player`}>
-          <button className="video-modal-backdrop" type="button" onClick={() => setActiveVideo(null)} aria-label="Video oynasini yopish" />
-          <div className="video-modal-panel">
-            <div className="video-modal-header">
-              <div><span>{activeVideo.channel}</span><h3>{activeVideo.title}</h3></div>
-              <button type="button" onClick={() => setActiveVideo(null)} aria-label="Videoni yopish">×</button>
-            </div>
-            <div className="video-frame">
-              <iframe
-                src={`https://www.youtube-nocookie.com/embed/${activeVideo.id}?autoplay=1&rel=0`}
-                title={activeVideo.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+            <div className="channel-stats">
+              <small>Demo statistika</small>
+              {channel.stats.map((stat) => <span key={stat}>{stat}</span>)}
             </div>
           </div>
-        </div>
-      )}
-    </>
+          <div className="video-grid video-grid--channel">
+            {channel.videos.map((video, index) => {
+              const isPlaying = activeId === video.id;
+              return (
+                <article className={`video-card video-card--inline ${isPlaying ? "is-playing" : ""}`} key={video.id}>
+                  {isPlaying ? (
+                    <div className="video-visual video-visual--playing">
+                      <iframe
+                        src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`}
+                        title={`${channel.name} — ${video.title}`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                      <button className="video-inline-close" type="button" onClick={() => setActiveId(null)} aria-label="Videoni yopish">×</button>
+                    </div>
+                  ) : (
+                    <button className="video-trigger" type="button" onClick={() => setActiveId(video.id)} aria-label={`${video.title} videosini shu kartada ko‘rish`}>
+                      <div className="video-visual">
+                        <img src={`https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`} alt="" loading="lazy" />
+                        <span className="video-play">▶</span>
+                        <span className="video-count">0{index + 1}</span>
+                      </div>
+                    </button>
+                  )}
+                  <div className="video-info"><span>{channel.name}</span><h4>{video.title}</h4></div>
+                </article>
+              );
+            })}
+            <a className="channel-more" href={channel.url} target="_blank" rel="noreferrer"><span>Barcha videolar</span><b>↗</b></a>
+          </div>
+        </section>
+      ))}
+    </div>
   );
 }

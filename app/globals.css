@@ -853,6 +853,24 @@ button {
 .soft-word--two { animation-delay: -2.3s; }
 .soft-word--three { animation-delay: -4.6s; }
 
+.scroll-motion-item {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  filter: blur(4px);
+  transition:
+    opacity 720ms cubic-bezier(.2,.72,.2,1),
+    transform 820ms cubic-bezier(.16,.78,.2,1),
+    filter 650ms ease;
+  transition-delay: var(--scroll-motion-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+
+.scroll-motion-item.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
 @keyframes soft-word-drift {
   0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
   35% { transform: translate3d(0, -.035em, 0) rotate(-.18deg); }
@@ -882,6 +900,51 @@ button {
   color: inherit;
   cursor: pointer;
   text-align: left;
+}
+
+.video-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.video-card--inline {
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  transition: border-color 250ms ease, background 250ms ease, transform 250ms ease;
+}
+
+.video-card--inline:hover { transform: translateY(-3px); }
+.video-card--inline.is-playing { border-color: rgba(255,201,40,.35); background: var(--soft-panel); transform: none; }
+.video-card--inline .video-info { padding-inline: 17px; }
+
+.video-visual--playing { aspect-ratio: 16/10; background: #000; }
+.video-visual--playing::after { display: none; }
+.video-visual--playing iframe { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; border: 0; }
+
+.video-inline-close {
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 999px;
+  background: rgba(5,9,16,.72);
+  color: #fff;
+  cursor: pointer;
+  font-size: 21px;
+  backdrop-filter: blur(10px);
 }
 
 .watch-note {
