@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { GlobalScrollMotion } from "./components/GlobalScrollMotion";
 import { PrivacyCenter } from "./components/PrivacyCenter";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host =
-    requestHeaders.get("x-forwarded-host") ??
-    requestHeaders.get("host") ??
-    "localhost:3000";
-  const protocol =
-    requestHeaders.get("x-forwarded-proto") ??
-    (host.startsWith("localhost") ? "http" : "https");
-  const origin = `${protocol}://${host}`;
+  const configuredUrl = process.env.PUBLIC_SITE_URL?.trim();
+  const origin = configuredUrl && /^https:\/\/[a-z0-9.-]+(?::\d+)?$/i.test(configuredUrl)
+    ? configuredUrl.replace(/\/$/, "")
+    : "https://multbilim-studio-demo.nosirbekxakimov01.chatgpt.site";
   const title = "MultBilim — Animation Studio";
   const description =
     "O‘zbekistonda yaratilgan olamlar. MultBilim animatsiya studiyasining original loyihalari va xizmatlari.";
@@ -21,6 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
+    metadataBase: new URL(origin),
+    alternates: { canonical: "/" },
     icons: {
       icon: "/media/multbilim-logo.png",
       shortcut: "/media/multbilim-logo.png",

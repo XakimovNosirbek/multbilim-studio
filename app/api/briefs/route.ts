@@ -6,6 +6,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export async function POST(request: Request) {
   const origin = request.headers.get("origin"); const host = request.headers.get("host");
+  if (!origin || !host) return Response.json({ error: "Forbidden" }, { status: 403 });
   if (origin && host) {
     try {
       if (new URL(origin).host !== host) return Response.json({ error: "Forbidden" }, { status: 403 });

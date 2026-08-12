@@ -61,6 +61,8 @@ export function PrivacyCenter() {
   const pathname = usePathname();
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
   const trackedPath = useRef("");
+  const modalRef = useRef<HTMLDivElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
   const [ready, setReady] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -90,11 +92,21 @@ export function PrivacyCenter() {
 
   useEffect(() => {
     if (!showSettings) return;
+    returnFocusRef.current = document.activeElement as HTMLElement | null;
+    const panel = modalRef.current;
+    const focusable = panel?.querySelectorAll<HTMLElement>('button, a[href], input:not([disabled])');
+    focusable?.[0]?.focus();
     const closeWithEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") setShowSettings(false);
+      if (event.key === "Tab" && focusable?.length) {
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
     };
     document.addEventListener("keydown", closeWithEscape);
-    return () => document.removeEventListener("keydown", closeWithEscape);
+    return () => { document.removeEventListener("keydown", closeWithEscape); returnFocusRef.current?.focus(); };
   }, [showSettings]);
 
   useEffect(() => {
@@ -162,7 +174,7 @@ export function PrivacyCenter() {
 
       {showSettings && (
         <div className="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
-          <div className="privacy-modal-panel">
+          <div className="privacy-modal-panel" ref={modalRef}>
             <div className="privacy-modal-head">
               <div><p className="privacy-eyebrow">Your Privacy Choices</p><h2 id="privacy-title">Maxfiylik tanlovlari</h2></div>
               <button type="button" onClick={() => setShowSettings(false)} aria-label="Maxfiylik oynasini yopish">×</button>

@@ -5,11 +5,19 @@ export type BriefInput = { name: string; email: string; company: string | null; 
 export async function createBrief(input: BriefInput) {
   if (!env.DB) throw new Error("Database binding is unavailable");
   const brief = { id: crypto.randomUUID(), createdAt: Date.now(), ...input };
-  await env.DB.prepare(
+  const deleteExpired = env.DB.prepare("DELETE FROM contact_briefs WHERE created_at < ?").bind(Date.now() - 365 * 24 * 60 * 60 * 1000);
+  const insertBrief = env.DB.prepare(
     `INSERT INTO contact_briefs (id, created_at, name, email, company, topic, details, status)
      VALUES (?, ?, ?, ?, ?, ?, ?, 'new')`,
-  ).bind(brief.id, brief.createdAt, brief.name, brief.email, brief.company, brief.topic, brief.details).run();
+  ).bind(brief.id, brief.createdAt, brief.name, brief.email, brief.company, brief.topic, brief.details);
+  await env.DB.batch([deleteExpired, insertBrief]);
   return brief;
+}
+
+export async function markAllBriefsRead() {
+  if (!env.DB) throw new Error("Database binding is unavailable");
+  const result = await env.DB.prepare("UPDATE contact_briefs SET status = 'read' WHERE status = 'new'").run();
+  return Number(result.meta.changes) || 0;
 }
 
 export async function getBriefSummary(limit = 5) {

@@ -486,6 +486,8 @@ Telegram Bot API
 
 Asosiy GitHub remote nomi odatda `github`; Sites remote nomi odatda `sites`. `origin` mavjud deb taxmin qilmang — `git remote -v` bilan tekshiring.
 
+MUHIM: Sites yaratgan Worker va D1 foydalanuvchining shaxsiy Cloudflare akkauntida ko‘rinmaydi. Ular platforma boshqaradigan tenantda. Foydalanuvchi kuzatuvi web `/admin`, Telegram Mini App va Sites deployment holati orqali amalga oshadi. Shaxsiy Cloudflare panelidan boshqarish talabi paydo bo‘lsa, bu “oddiy custom domain” emas, to‘liq hosting migratsiyasi hisoblanadi.
+
 Amaldagi public demo URL README’da ko‘rsatilgan. Custom domain ishga tushganda `PUBLIC_SITE_URL`, Telegram tugmalari, webhook, canonical/social metadata va README birgalikda yangilanishi kerak.
 
 ## 25. Environment va secret runbook
@@ -597,6 +599,8 @@ Bot webhook’ini o‘zgartirganda brief bazaga saqlanishi Telegram yetkazib ber
 | `/api/telegram/webhook` | Telegram POST | secret header majburiy |
 
 Rate limiting hozir infratuzilma darajasiga bog‘liq. Trafik oshsa `/api/briefs` va analytics uchun Cloudflare rate limiting yoki Turnstile qo‘shish tavsiya etiladi; yangi shaxsiy tracking qo‘shmang.
+
+Admin SIWC xavfsizligi Sites dispatcher foydalanuvchi headerlarini qayta yozishiga bog‘liq. Worker’ni to‘g‘ridan-to‘g‘ri `workers.dev` yoki boshqa proxy orqali ochmang. Shaxsiy Cloudflare’ga migratsiya qilinsa `/admin` uchun mustaqil OIDC yoki imzolangan session auth qurilmaguncha production’ga chiqarmang.
 
 ## 30. Dependency xavfsizligi
 

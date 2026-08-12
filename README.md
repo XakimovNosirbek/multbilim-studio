@@ -483,7 +483,7 @@ Loyiha statik GitHub Pages sayti emas. To‘liq funksiyalar uchun Cloudflare Wor
 
 1. Repository’ni clone qiling va Node.js `22.13+` bilan `npm ci` bajaring.
 2. `npm run lint` va `npm test` muvaffaqiyatli o‘tishini tekshiring.
-3. `.openai/hosting.json`dagi mavjud Sites `project_id` va `DB` logical binding’ini saqlang.
+3. `.openai/hosting.json`dagi mavjud Sites `project_id` va `DB` logical binding’ini saqlang. Bu D1 OpenAI Sites boshqaradigan Cloudflare tenantida yaratiladi; shaxsiy `dash.cloudflare.com` akkauntingizda ko‘rinmasligi normal.
 4. Yangi Sites loyihasi faqat mavjud project’dan foydalanish imkoni mutlaqo bo‘lmaganda yaratiladi.
 5. Hosting environment’da yuqoridagi beshta qiymatni sozlang.
 6. `drizzle/` ichidagi uch migration ketma-ket qo‘llanishini tekshiring; ular analytics, brief va device platform ustunlarini yaratadi.
@@ -503,6 +503,19 @@ Loyiha statik GitHub Pages sayti emas. To‘liq funksiyalar uchun Cloudflare Wor
 - iPhone aniq modeli odatiy browser User-Agent orqali ishonchli aniqlanmaydi; dashboard `iPhone`, `Android`, `Windows`, `macOS` kabi platformani ko‘rsatadi va fingerprinting qilmaydi.
 - `npm audit`da `vinext/image-size` hamda migration CLI zanjirida upstream advisory qolishi mumkin. Ularni `--force` bilan mos kelmaydigan eski versiyaga tushirmang; Sites-compatible yangilanish chiqqanda alohida sinab yangilang.
 - Demo jamoa, statistika va ayrim matnlar studiya tomonidan tasdiqlanmaguncha rasmiy fakt emas.
+
+## Analitika va ma’lumotni qayerdan kuzatish kerak?
+
+Amaldagi production OpenAI Sites tomonidan boshqariladi. Shu sabab foydalanuvchining shaxsiy Cloudflare panelida Worker yoki D1 ko‘rinmaydi.
+
+- Web dashboard: [`/admin`](https://multbilim-studio-demo.nosirbekxakimov01.chatgpt.site/admin) — ChatGPT login va email allowlist talab qiladi.
+- Telegram dashboard: botdagi **Admin Dashboard** tugmasi — Telegram ID allowlist talab qiladi.
+- Brief va tezkor hisobot: Telegram bot menyusi.
+- Source va deploy tarixi: GitHub `main` commitlari hamda Sites project versiyalari.
+
+Dashboard bo‘sh bo‘lsa, bu D1 yo‘qligini anglatmaydi. Analitika faqat tashrifchi cookie bannerida ruxsat berganidan keyin yoziladi. Tekshirish uchun public saytni inkognito oynada oching, analitikani qabul qiling, bir nechta sahifaga kiring va dashboardni yangilang.
+
+Agar barcha resurslar bevosita shaxsiy Cloudflare panelida ko‘rinishi kerak bo‘lsa, alohida migratsiya talab qilinadi: Worker, D1, custom domain, secrets, migration va auth mustaqil Cloudflare account’ga ko‘chiriladi. Bu hozirgi Sites deployment’dan boshqa hosting modeli.
 
 ## Huquqlar
 

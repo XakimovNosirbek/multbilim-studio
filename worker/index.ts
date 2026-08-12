@@ -40,7 +40,15 @@ const worker = {
       }, allowedWidths);
     }
 
-    return handler.fetch(request, env, ctx);
+    const response = await handler.fetch(request, env, ctx);
+    const secured = new Response(response.body, response);
+    secured.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+    secured.headers.set("X-Content-Type-Options", "nosniff");
+    secured.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+    secured.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
+    secured.headers.set("X-Frame-Options", "SAMEORIGIN");
+    secured.headers.set("Content-Security-Policy", "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self' https://web.telegram.org; script-src 'self' 'unsafe-inline' https://telegram.org https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.ytimg.com; font-src 'self'; frame-src https://www.youtube-nocookie.com https://www.youtube.com; connect-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; form-action 'self'; upgrade-insecure-requests");
+    return secured;
   },
 };
 

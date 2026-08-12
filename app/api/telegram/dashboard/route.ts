@@ -25,7 +25,7 @@ async function validateInitData(initData: string): Promise<ValidationResult> {
   const receivedHash = params.get("hash") ?? "";
   const authDate = Number(params.get("auth_date"));
   if (!receivedHash || !authDate) return { user: null, error: "Telegram sessiyasi noto‘g‘ri" };
-  if (Math.abs(Date.now() / 1000 - authDate) > 86400) return { user: null, error: "Telegram sessiyasi eskirgan. Mini App’ni qayta oching." };
+  if (Math.abs(Date.now() / 1000 - authDate) > 3600) return { user: null, error: "Telegram sessiyasi eskirgan. Mini App’ni qayta oching." };
   params.delete("hash");
   const dataCheckString = [...params.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => `${key}=${value}`).join("\n");
   const encoder = new TextEncoder();
@@ -42,7 +42,7 @@ async function validateInitData(initData: string): Promise<ValidationResult> {
   }
   if (!user?.id) return { user: null, error: "Telegram foydalanuvchisi aniqlanmadi" };
   const allowed = new Set((runtime.TELEGRAM_ADMIN_IDS ?? "").split(",").map((value) => value.trim()).filter(Boolean));
-  if (!allowed.has(String(user.id))) return { user: null, error: `Telegram ID ${user.id} administratorlar ro‘yxatida yo‘q` };
+  if (!allowed.has(String(user.id))) return { user: null, error: "Bu Telegram akkauntiga administrator ruxsati berilmagan" };
   return { user, error: null };
 }
 

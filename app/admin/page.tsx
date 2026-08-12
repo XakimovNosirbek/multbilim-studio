@@ -158,7 +158,7 @@ export default async function AdminPage() {
 
         <div className="admin-content" id="overview">
           <div className="admin-page-heading">
-            <div><p className="admin-eyebrow">Jonli ko‘rsatkichlar</p><h2>Sayt holati</h2><p>Faqat tashrifchi rozilik berganidan keyingi anonim ma’lumotlar.</p></div>
+            <div><p className="admin-eyebrow">Jonli ko‘rsatkichlar</p><h2>Sayt holati</h2><p>Faqat tashrifchi rozilik berganidan keyingi anonim, yo‘nalish beruvchi ma’lumotlar. Reklama auditi uchun mo‘ljallanmagan.</p></div>
             <div className="admin-range"><span>Oxirgi 30 kun</span><small>{formatDate(analytics.generatedAt)} da yangilandi</small></div>
           </div>
 
