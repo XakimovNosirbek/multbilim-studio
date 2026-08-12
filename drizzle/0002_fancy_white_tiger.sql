@@ -1,0 +1,1 @@
+ALTER TABLE `analytics_visits` ADD `device_platform` text;

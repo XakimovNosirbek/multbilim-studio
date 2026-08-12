@@ -6,6 +6,7 @@ export type AnonymousVisit = {
   referrerOrigin: string | null;
   language: string | null;
   deviceType: string | null;
+  devicePlatform: string | null;
   timezone: string | null;
   consentVersion: string;
 };
@@ -22,8 +23,8 @@ export async function recordAnonymousVisit(visit: AnonymousVisit) {
   const insertVisit = env.DB
     .prepare(
       `INSERT INTO analytics_visits
-        (id, visitor_id, visited_at, path, referrer_origin, language, device_type, timezone, consent_version)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        (id, visitor_id, visited_at, path, referrer_origin, language, device_type, device_platform, timezone, consent_version)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .bind(
       crypto.randomUUID(),
@@ -33,6 +34,7 @@ export async function recordAnonymousVisit(visit: AnonymousVisit) {
       visit.referrerOrigin,
       visit.language,
       visit.deviceType,
+      visit.devicePlatform,
       visit.timezone,
       visit.consentVersion,
     );

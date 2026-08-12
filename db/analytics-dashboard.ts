@@ -23,6 +23,7 @@ type RecentVisitRow = {
   referrer_origin: string | null;
   language: string | null;
   device_type: string | null;
+  device_platform: string | null;
   timezone: string | null;
 };
 
@@ -33,6 +34,8 @@ export type AnalyticsDashboard = {
     visitors: number;
     todayVisits: number;
     todayVisitors: number;
+    lastHourVisits: number;
+    last15MinuteVisits: number;
     pagesPerVisitor: number;
     visitTrend: number | null;
     visitorTrend: number | null;
@@ -40,6 +43,7 @@ export type AnalyticsDashboard = {
   daily: Array<{ day: string; visits: number; visitors: number }>;
   pages: Array<{ label: string; count: number; percentage: number }>;
   devices: Array<{ label: string; count: number; percentage: number }>;
+  platforms: Array<{ label: string; count: number; percentage: number }>;
   sources: Array<{ label: string; count: number; percentage: number }>;
   languages: Array<{ label: string; count: number; percentage: number }>;
   recent: Array<{
@@ -101,9 +105,12 @@ export async function getAnalyticsDashboard(days = 30): Promise<AnalyticsDashboa
     current,
     previous,
     today,
+    lastHour,
+    last15Minutes,
     dailyResult,
     pagesResult,
     devicesResult,
+    platformsResult,
     sourcesResult,
     languagesResult,
     recentResult,
@@ -117,6 +124,8 @@ export async function getAnalyticsDashboard(days = 30): Promise<AnalyticsDashboa
     env.DB.prepare(
       "SELECT COUNT(*) AS visits, COUNT(DISTINCT visitor_id) AS visitors FROM analytics_visits WHERE visited_at >= ?",
     ).bind(todayStart).first<TotalRow>(),
+    env.DB.prepare("SELECT COUNT(*) AS visits, COUNT(DISTINCT visitor_id) AS visitors FROM analytics_visits WHERE visited_at >= ?").bind(now - 60 * 60 * 1000).first<TotalRow>(),
+    env.DB.prepare("SELECT COUNT(*) AS visits, COUNT(DISTINCT visitor_id) AS visitors FROM analytics_visits WHERE visited_at >= ?").bind(now - 15 * 60 * 1000).first<TotalRow>(),
     env.DB.prepare(
       `SELECT strftime('%Y-%m-%d', (visited_at + 18000000) / 1000, 'unixepoch') AS day,
               COUNT(*) AS visits,
@@ -142,6 +151,9 @@ export async function getAnalyticsDashboard(days = 30): Promise<AnalyticsDashboa
        ORDER BY count DESC`,
     ).bind(periodStart).all<LabelCountRow>(),
     env.DB.prepare(
+      `SELECT device_platform AS label, COUNT(*) AS count FROM analytics_visits WHERE visited_at >= ? GROUP BY device_platform ORDER BY count DESC`,
+    ).bind(periodStart).all<LabelCountRow>(),
+    env.DB.prepare(
       `SELECT referrer_origin AS label, COUNT(*) AS count
        FROM analytics_visits
        WHERE visited_at >= ?
@@ -158,7 +170,7 @@ export async function getAnalyticsDashboard(days = 30): Promise<AnalyticsDashboa
        LIMIT 8`,
     ).bind(periodStart).all<LabelCountRow>(),
     env.DB.prepare(
-      `SELECT id, visited_at, path, referrer_origin, language, device_type, timezone
+      `SELECT id, visited_at, path, referrer_origin, language, device_type, device_platform, timezone
        FROM analytics_visits
        ORDER BY visited_at DESC
        LIMIT 12`,
@@ -177,6 +189,8 @@ export async function getAnalyticsDashboard(days = 30): Promise<AnalyticsDashboa
       visitors: currentVisitors,
       todayVisits: Number(today?.visits) || 0,
       todayVisitors: Number(today?.visitors) || 0,
+      lastHourVisits: Number(lastHour?.visits) || 0,
+      last15MinuteVisits: Number(last15Minutes?.visits) || 0,
       pagesPerVisitor: currentVisitors > 0 ? currentVisits / currentVisitors : 0,
       visitTrend: percentChange(currentVisits, previousVisits),
       visitorTrend: percentChange(currentVisitors, previousVisitors),
@@ -184,6 +198,7 @@ export async function getAnalyticsDashboard(days = 30): Promise<AnalyticsDashboa
     daily: fillDailySeries(dailyResult.results, days, now),
     pages: asBreakdown(pagesResult.results, currentVisits, "Noma’lum sahifa"),
     devices: asBreakdown(devicesResult.results, currentVisits, "Noma’lum qurilma"),
+    platforms: asBreakdown(platformsResult.results, currentVisits, "Noma’lum platforma"),
     sources: asBreakdown(sourcesResult.results, currentVisits, "To‘g‘ridan-to‘g‘ri"),
     languages: asBreakdown(languagesResult.results, currentVisits, "Noma’lum til"),
     recent: recentResult.results.map((row) => ({

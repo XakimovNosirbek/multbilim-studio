@@ -10,6 +10,7 @@ export const analyticsVisits = sqliteTable(
     referrerOrigin: text("referrer_origin"),
     language: text("language"),
     deviceType: text("device_type"),
+    devicePlatform: text("device_platform"),
     timezone: text("timezone"),
     consentVersion: text("consent_version").notNull(),
   },

@@ -46,6 +46,17 @@ function getDeviceType() {
   return "desktop";
 }
 
+function getDevicePlatform() {
+  const ua = navigator.userAgent;
+  if (/iPhone/i.test(ua)) return "iPhone";
+  if (/iPad/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) return "iPad";
+  if (/Android/i.test(ua)) return "Android";
+  if (/Windows/i.test(ua)) return "Windows";
+  if (/Macintosh|Mac OS X/i.test(ua)) return "macOS";
+  if (/Linux/i.test(ua)) return "Linux";
+  return "Boshqa";
+}
+
 export function PrivacyCenter() {
   const pathname = usePathname();
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
@@ -106,6 +117,7 @@ export function PrivacyCenter() {
         referrerOrigin: getReferrerOrigin(),
         language: navigator.language,
         deviceType: getDeviceType(),
+        devicePlatform: getDevicePlatform(),
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         consentVersion: CONSENT_VERSION,
       }),

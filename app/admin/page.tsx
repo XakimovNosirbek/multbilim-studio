@@ -182,6 +182,16 @@ export default async function AdminPage() {
               <strong>{formatNumber(analytics.totals.pagesPerVisitor, 1)}</strong>
               <p>Sahifa / tashrifchi</p><small>Kontentga qiziqish chuqurligi</small>
             </article>
+            <article>
+              <div className="admin-metric-head"><span className="admin-metric-icon">◷</span><span className="admin-metric-live"><i /> 60 daqiqa</span></div>
+              <strong>{formatNumber(analytics.totals.lastHourVisits)}</strong>
+              <p>Oxirgi soat</p><small>Har daqiqada yangilanadigan davr</small>
+            </article>
+            <article>
+              <div className="admin-metric-head"><span className="admin-metric-icon">·</span><span className="admin-metric-live"><i /> 15 daqiqa</span></div>
+              <strong>{formatNumber(analytics.totals.last15MinuteVisits)}</strong>
+              <p>Hozirgi faollik</p><small>Oxirgi 15 daqiqadagi ko‘rishlar</small>
+            </article>
           </section>
 
           <section className="admin-dashboard-grid" id="traffic">
@@ -212,6 +222,9 @@ export default async function AdminPage() {
                   <div className="admin-device-list">
                     {analytics.devices.map((item, index) => (
                       <div key={item.label}><span><i className={`admin-color-${index % 5}`} />{deviceIcons[item.label] ?? "·"} {deviceNames[item.label] ?? item.label}</span><strong>{item.percentage}%</strong></div>
+                    ))}
+                    {analytics.platforms.map((item, index) => (
+                      <div key={item.label}><span><i className={`admin-color-${(index + 2) % 5}`} />{item.label}</span><strong>{item.percentage}%</strong></div>
                     ))}
                   </div>
                 </div>

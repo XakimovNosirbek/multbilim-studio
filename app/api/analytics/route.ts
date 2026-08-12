@@ -48,7 +48,8 @@ export async function POST(request: Request) {
       path,
       referrerOrigin: optionalText(body.referrerOrigin, 180),
       language: optionalText(body.language, 24),
-      deviceType,
+    deviceType,
+    devicePlatform: optionalText(body.devicePlatform, 40),
       timezone: optionalText(body.timezone, 80),
       consentVersion,
     });
