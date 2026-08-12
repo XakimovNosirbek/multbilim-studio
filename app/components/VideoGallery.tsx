@@ -6,7 +6,7 @@ const channels = [
   {
     name: "Bek va Lola",
     description: "Gigiyena, sog‘lom odatlar va kundalik foydali ko‘nikmalarni quvnoq hikoyalarga aylantiradigan oilaviy loyiha.",
-    stats: ["37,3 mln ko‘rish", "15+ epizod", "2 yil efirda"],
+    stats: ["Oilaviy format", "Qisqa epizodlar", "O‘zbek tilida"],
     videos: [
       { id: "BQy49Y12YDo", title: "Badantarbiya 2" },
       { id: "g7Km27hLJ5E", title: "Toza qo‘llar" },
@@ -15,7 +15,7 @@ const channels = [
   {
     name: "Yashil makon",
     description: "Tabiat, suv va energiyani asrashni bolalar tushunadigan sodda, rang-barang sarguzashtlarda o‘rgatadi.",
-    stats: ["3,2 mln+ ko‘rish", "15+ epizod", "2025 boshlangan"],
+    stats: ["Ekota’lim", "Bolalar uchun", "O‘zbek tilida"],
     videos: [
       { id: "t7yvEtXFJqE", title: "Yashil makonga aylantiraylik" },
       { id: "qbRTnc2G6uA", title: "Batareyalar zararlimi?" },
@@ -38,7 +38,7 @@ export function VideoGallery() {
               <p>{channel.description}</p>
             </div>
             <div className="channel-stats">
-              <small>Demo statistika</small>
+              <small>Loyiha formati</small>
               {channel.stats.map((stat) => <span key={stat}>{stat}</span>)}
             </div>
           </div>

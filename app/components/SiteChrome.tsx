@@ -13,9 +13,8 @@ export function SiteHeader() {
 
       <nav className="desktop-nav" aria-label="Asosiy navigatsiya">
         <a href="/#projects">Loyihalar</a>
+        <a href="/#studio">Studiya</a>
         <a href="/#services">Xizmatlar</a>
-        <a href="/#technology">Texnologiya</a>
-        <a href="/#team">Jamoa</a>
         <a href="/#careers">Karyera</a>
         <a href="/#watch">Tomosha</a>
       </nav>
@@ -31,10 +30,9 @@ export function SiteHeader() {
         <summary aria-label="Menyuni ochish">Menyu</summary>
         <nav aria-label="Mobil navigatsiya">
           <a href="/#projects">Loyihalar</a>
-          <a href="/#studio">Studio</a>
+          <a href="/#studio">Studiya</a>
           <a href="/#services">Xizmatlar</a>
-          <a href="/#technology">Texnologiya</a>
-          <a href="/#team">Jamoa</a>
+          <a href="/#technology">Ishlab chiqarish</a>
           <a href="/#careers">Karyera</a>
           <a href="/#faq">Savollar</a>
           <a href="/#watch">Tomosha</a>
@@ -76,8 +74,8 @@ export function SiteFooter() {
         </div>
         <div>
           <span>Aloqa</span>
-          <a href="mailto:hello@multbilim.uz">Hamkorlik</a>
-          <a href="mailto:loyiha@multbilim.uz">Buyurtma</a>
+          <a href="/#contact">Hamkorlik</a>
+          <a href="/#contact">Buyurtma</a>
           <a href="/#contact">Aloqa</a>
         </div>
       </div>

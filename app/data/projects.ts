@@ -131,12 +131,12 @@ export const projects: Project[] = [
     genre: "Texno-fantasy · Komediya",
     stage: "Personaj va olam dizayni",
     logline:
-      "Umid va Megavoylar raqamli olamni viruslardan himoya qilar ekan, bolalarga texnologiyani ongli va xavfsiz ishlatishni o‘rgatadi.",
+      "Kilobayt, Megabayt va Terabayt raqamli olamdagi muammolarni hal qilar ekan, yosh tomoshabinni texnologiya bilan ongli va xavfsiz tanishtiradi.",
     story: [
-      "Umid yangi qurilmalarni sinab ko‘rishni yaxshi ko‘radi, lekin raqamli olamdagi har tugmaning oqibati borligini hali bilmaydi. Bir tasodif uni Megavoylar yashaydigan sirli tizim ichiga olib kiradi.",
-      "Kilobayt, Megabayt, Terabayt va Gigabaytning har biri texnologiyaning bir kuchini ifodalaydi. Ular birga zararli viruslar va noto‘g‘ri axborotga qarshi kurashadi.",
+      "Megavoylar — hayotiy va fantastik unsurlar uyg‘unlashgan raqamli olam. Har bir epizodda axborot uzatish, algoritmik fikrlash, dasturlash asoslari va raqamli xavfsizlik voqea orqali sodda tilda ochiladi.",
+      "Tezkor quyon Kilobayt, mulohazali pandacha Megabayt va dono bug‘u Terabayt xato qiladi, tajriba o‘tkazadi va birgalikda yechim topadi. Hikoyalar STEAM yondashuvi asosida mustaqil fikrlashni rag‘batlantiradi.",
     ],
-    values: ["Raqamli xavfsizlik", "Mantiq", "Jamoa", "Mas’uliyat"],
+    values: ["Raqamli savodxonlik", "Mantiq", "Jamoaviy ish", "Ijodiy fikrlash"],
     gallery: [1, 2, 3, 4].map((n) => `/media/projects/megavoylar/gallery-${n}.jpg`),
   },
   {

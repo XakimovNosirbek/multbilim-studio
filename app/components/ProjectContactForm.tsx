@@ -5,7 +5,7 @@ import { FormEvent, useState } from "react";
 export function ProjectContactForm() {
   const [message, setMessage] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const name = String(data.get("name") ?? "");
@@ -13,13 +13,14 @@ export function ProjectContactForm() {
     const company = String(data.get("company") ?? "");
     const topic = String(data.get("topic") ?? "");
     const details = String(data.get("details") ?? "");
-    const subject = encodeURIComponent(`MultBilim: ${topic} — ${name}`);
-    const body = encodeURIComponent(
-      `Ism: ${name}\nEmail: ${email}\nKompaniya: ${company || "—"}\nYo‘nalish: ${topic}\n\nLoyiha haqida:\n${details}`,
-    );
+    const brief = `MULTBILIM — LOYIHA BRIEFI\n\nIsm: ${name}\nEmail: ${email}\nKompaniya: ${company || "—"}\nYo‘nalish: ${topic}\n\nLoyiha haqida:\n${details}`;
 
-    setMessage("Email ilovangiz ochilmoqda…");
-    window.location.href = `mailto:hello@multbilim.uz?subject=${subject}&body=${body}`;
+    try {
+      await navigator.clipboard.writeText(brief);
+      setMessage("Brief nusxalandi. Uni studiyaning rasmiy kontaktiga yuborishingiz mumkin.");
+    } catch {
+      setMessage("Brief tayyor. Matnni belgilang va studiyaning rasmiy kontaktiga yuboring.");
+    }
   }
 
   return (
@@ -51,8 +52,8 @@ export function ProjectContactForm() {
         <textarea name="details" required rows={5} placeholder="Qisqa tavsif, taxminiy davomiylik va muddat…" />
       </label>
       <div className="contact-form-action">
-        <button className="button button-primary" type="submit">Xabar tayyorlash <span>↗</span></button>
-        <p aria-live="polite">{message || "Forma email ilovangiz orqali yuboriladi."}</p>
+        <button className="button button-primary" type="submit">Briefni tayyorlash <span>↗</span></button>
+        <p aria-live="polite">{message || "Ma’lumotlar brief ko‘rinishida nusxalanadi."}</p>
       </div>
     </form>
   );

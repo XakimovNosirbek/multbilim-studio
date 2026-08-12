@@ -122,7 +122,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <section className="project-cta section-shell">
         <p className="kicker"><span /> Hamkorlik</p>
         <h2>Bu olamning keyingi bosqichini birga yarataylik.</h2>
-        <a className="button button-primary" href="mailto:hello@multbilim.uz">Bog‘lanish <span>↗</span></a>
+        <a className="button button-primary" href="/#contact">Loyihani muhokama qilish <span>↗</span></a>
       </section>
 
       <SiteFooter />

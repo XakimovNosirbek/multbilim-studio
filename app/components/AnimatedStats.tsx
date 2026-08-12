@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 
 const stats = [
-  { value: 6, decimals: 0, suffix: "", label: "Original loyiha" },
-  { value: 38.4, decimals: 1, suffix: " mln", label: "YouTube ko‘rish" },
-  { value: 2, decimals: 0, suffix: "", label: "Efirdagi serial" },
-  { value: 40, decimals: 0, suffix: "+", label: "Ijodiy mutaxassis" },
+  { value: 6, decimals: 0, suffix: "", label: "Original olam" },
+  { value: 2, decimals: 0, suffix: "", label: "Ta’limiy loyiha" },
+  { value: 5, decimals: 0, suffix: "", label: "Ishlab chiqarish bosqichi" },
+  { value: 4, decimals: 0, suffix: "", label: "Ijodiy yo‘nalish" },
 ];
 
 export function AnimatedStats() {
@@ -81,7 +81,7 @@ export function AnimatedStats() {
           );
         })}
       </div>
-      <p className="demo-note">Demo statistika · real ma’lumotlar bilan almashtiriladi</p>
+      <p className="demo-note">MultBilim taqdimot portfeli asosida</p>
     </section>
   );
 }

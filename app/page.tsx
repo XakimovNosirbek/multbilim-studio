@@ -21,34 +21,28 @@ const process = [
 ];
 
 const technologies = [
-  { title: "3D ishlab chiqarish", tools: "Maya · Blender · Houdini", image: "/media/projects/megavoylar/gallery-2.jpg", text: "Modellashtirishdan rig va final animatsiyagacha nazorat qilinadigan pipeline." },
-  { title: "Realtime previz", tools: "Unreal Engine · Animatik", image: "/media/projects/zij/gallery-3.jpg", text: "Kamera, yorug‘lik va sahna ritmini ishlab chiqarishdan oldin sinab ko‘ramiz." },
-  { title: "2D va konsept", tools: "Photoshop · Storyboard Pro", image: "/media/projects/ikki-dunyo/gallery-2.jpg", text: "Har bir olam uchun rang, shakl, qahramon va vizual dramaturgiya tili." },
-  { title: "Post va ovoz", tools: "After Effects · Resolve · Pro Tools", image: "/media/projects/alpomish/gallery-3.jpg", text: "Kompoziting, rang, effekt va ovozni bitta yakuniy hissiyotga birlashtiramiz." },
+  { title: "Vizual ishlab chiqarish", tools: "Konsept · 2D/3D · Realtime previz", image: "/media/projects/megavoylar/gallery-2.jpg", text: "Olam va personaj dizaynidan model, rig, animatsiya, yorug‘lik va final kadrgacha yagona vizual yo‘nalish." },
+  { title: "Post va ovoz", tools: "Kompoziting · Rang · Ovoz dizayni", image: "/media/projects/alpomish/gallery-3.jpg", text: "Tasvir, effekt, musiqa, dublyaj va final miksni hikoyaning bitta yakuniy hissiyotiga birlashtiramiz." },
 ];
 
-const team = [
-  { name: "Aziza Karimova", role: "Creative producer", image: "/media/team/aziza.jpg" },
-  { name: "Sardor Rahimov", role: "Animation director", image: "/media/team/sardor.jpg" },
-  { name: "Madina Usmonova", role: "Character artist", image: "/media/team/madina.jpg" },
-  { name: "Kamol Nurmatov", role: "Technical director", image: "/media/team/kamol.jpg" },
+const disciplines = [
+  { name: "Hikoya va rejissura", role: "Ssenariy · Storibord · Animatik", image: "/media/projects/ikki-dunyo/gallery-1.jpg" },
+  { name: "Dizayn va olam", role: "Konsept · Personaj · Fon", image: "/media/projects/alpomish/gallery-3.jpg" },
+  { name: "Animatsiya", role: "Model · Rig · 2D/3D harakat", image: "/media/projects/megavoylar/gallery-2.jpg" },
+  { name: "Post va ovoz", role: "Kompoziting · Rang · Final miks", image: "/media/projects/zij/gallery-4.jpg" },
 ];
 
 const jobs = [
-  { area: "Animatsiya", title: "3D animator", meta: "Toshkent · To‘liq kun · 2+ yil tajriba" },
-  { area: "Dizayn", title: "Fon rassomi", meta: "Toshkent yoki masofadan · To‘liq kun" },
-  { area: "Hikoya", title: "Storibord rassomi", meta: "Loyiha asosida · Kuchli portfolio" },
-  { area: "Ovoz", title: "Ovoz dizayneri", meta: "Toshkent · Yarim kun" },
-  { area: "Amaliyot", title: "Yozgi amaliyot dasturi", meta: "Talabalar uchun 3 oy · Demo e’lon" },
+  { area: "Ijodkorlar", title: "Portfolio qabul qilamiz", meta: "Animatsiya, konsept-art, storibord va post-production yo‘nalishlari" },
+  { area: "Studiyalar", title: "Koproduksiya hamkorligi", meta: "Rivojlantirish, ishlab chiqarish va lokalizatsiya bo‘yicha hamkorlik" },
+  { area: "Tashkilotlar", title: "Buyurtma loyiha", meta: "Ta’limiy serial, ijtimoiy rolik va brend hikoyalari" },
 ];
 
 const faqs = [
-  ["Loyihalar qaysi bosqichda?", "Saytdagi loyihalar konsept, vizual ishlab chiqish va serial bibliyasi bosqichlarida. Aniq ishlab chiqarish holati real ma’lumotlar kelgach yangilanadi."],
-  ["Buyurtma rolik narxi qanday hisoblanadi?", "Narx davomiylik, uslub, personajlar soni, texnika, til versiyalari va muddatga qarab hisoblanadi. Qisqa briefdan keyin diapazon beramiz."],
-  ["Qanday texnikada ishlaysiz?", "2D, 3D va realtime previzni loyiha ehtiyojiga qarab birlashtiramiz. Asosiy pipeline Maya, Blender, Unreal Engine, Adobe va DaVinci vositalariga tayangan."],
-  ["Serialni telekanalda ko‘rsatish mumkinmi?", "Ha. Litsenziya hududi, muddati, til versiyasi va platformalar soni bo‘yicha alohida kelishuv tayyorlanadi."],
-  ["Koproduksiyaga ochiqmisiz?", "Ha. Mahalliy va xalqaro studiyalar bilan rivojlantirish, ishlab chiqarish, servis va distribusiya hamkorliklarini ko‘rib chiqamiz."],
-  ["Amaliyotga qanday kirish mumkin?", "Portfolio yoki 60–90 soniyalik showreel, qisqa motivatsion xat va qiziqayotgan yo‘nalishingizni karyera emailiga yuboring."],
+  ["Loyihani nimadan boshlaymiz?", "Qisqa g‘oya, maqsadli auditoriya va taxminiy davomiylik yetarli. Dastlabki suhbatdan so‘ng format, uslub, bosqichlar va ishlab chiqarish hajmini birga aniqlaymiz."],
+  ["Narx qanday shakllanadi?", "Byudjet davomiylik, texnika, personajlar soni, murakkablik, til versiyalari va muddatga bog‘liq. Briefdan keyin ish hajmi va taxminiy diapazon tayyorlanadi."],
+  ["Qaysi formatlarda ishlaysiz?", "Original serial va filmlardan tashqari ta’limiy kontent, ijtimoiy rolik, brend animatsiyasi, lokalizatsiya, ovoz va post-production yo‘nalishlarini birlashtiramiz."],
+  ["Koproduksiyaga ochiqmisiz?", "Ha. Mahalliy va xalqaro hamkorlar bilan loyiha rivojlantirish, ishlab chiqarish servisi, lokalizatsiya hamda distribusiya formatlarini ko‘rib chiqamiz."],
 ];
 
 export default function Home() {
@@ -69,8 +63,8 @@ export default function Home() {
           </h1>
           <p className="hero-copy">Mahalliy ruh, dunyo darajasidagi animatsiya. Biz bolalar va oilalar sevib qoladigan qahramonlarni yaratamiz.</p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#projects">Olamlarni kashf eting <span>↓</span></a>
-            <a className="button button-ghost hero-watch" href="#watch"><span className="play-dot">▶</span> Pastda tomosha qiling</a>
+            <a className="button button-primary" href="#watch"><span className="play-dot">▶</span> Ishlarni tomosha qiling</a>
+            <a className="button button-ghost hero-watch" href="#projects">Loyihalarni kashf eting <span>↓</span></a>
           </div>
         </div>
         <div className="hero-index"><span>MB / 01</span><span className="hero-index-line" /><span>ALPOMISH</span></div>
@@ -91,7 +85,7 @@ export default function Home() {
       <section className="projects section-shell" id="projects">
         <div className="section-heading scroll-reveal">
           <div><p className="kicker"><span /> Tanlangan loyihalar</p><h2>Bir studio. Olti xil olam.</h2></div>
-          <p className="section-note">Har bir kartani oching: loyiha hikoyasi, qahramonlari va PDFdan olingan konsept materiallari alohida sahifada joylashgan.</p>
+          <p className="section-note">Original filmlar va seriallar: har bir loyiha uchun alohida hikoya, vizual yo‘nalish va konsept galereyasi.</p>
         </div>
         <div className="project-grid">
           {projects.map((project, index) => (
@@ -107,8 +101,6 @@ export default function Home() {
         </div>
       </section>
 
-      <AnimatedStats />
-
       <section className="watch-section section-shell" id="watch">
         <div className="wide-section-head scroll-reveal">
           <div><p className="kicker"><span /> Hozir efirda</p><h2>Hikoyalar harakatda.</h2></div>
@@ -116,6 +108,8 @@ export default function Home() {
         </div>
         <VideoGallery />
       </section>
+
+      <AnimatedStats />
 
       <section className="services section-shell" id="services">
         <div className="section-heading scroll-reveal">
@@ -161,20 +155,20 @@ export default function Home() {
         <div className="proof-image"><img src="/media/zij.jpg" alt="Zij animatsion loyihasidan kadr" loading="lazy" /></div>
         <div className="proof-content scroll-reveal">
           <p className="kicker"><span /> MultBilim haqida</p><h2>Mahalliy ildiz. Cheksiz tasavvur.</h2>
-          <p>Biz zamonaviy texnologiya bilan o‘zbek madaniyati, bolalar ta’limi va universal insoniy qadriyatlarni bir kadrda uchrashtiramiz.</p>
-          <div className="proof-stats"><div><strong>06</strong><span>Original olam</span></div><div><strong>02</strong><span>Efirda loyiha</span></div><div><strong>∞</strong><span>Yangi g‘oya</span></div></div>
+          <p>O‘zbek dostonlari, ilm-fan, ekologiya va bolalik tasavvuri — zamonaviy animatsiya tilida birlashadigan turli olamlar uchun asos.</p>
+          <div className="proof-stats"><div><strong>06</strong><span>Original konsept</span></div><div><strong>02</strong><span>Ta’limiy yo‘nalish</span></div><div><strong>05</strong><span>Ishlab chiqarish bosqichi</span></div></div>
         </div>
       </section>
 
       <section className="team section-shell" id="team">
         <div className="wide-section-head scroll-reveal">
           <div><p className="kicker"><span /> Studio odamlari</p><h2>Olamlarni odamlar yaratadi.</h2></div>
-          <p>Quyidagi ism va portretlar demo uchun qo‘yilgan. Keyinchalik haqiqiy MultBilim jamoasi bilan almashtiriladi.</p>
+          <p>Har bir loyiha hikoya, tasvir, harakat va ovozni birlashtiradigan ko‘p yo‘nalishli ijodiy tizimda yaratiladi.</p>
         </div>
         <div className="team-grid">
-          {team.map((member, index) => (
+          {disciplines.map((member, index) => (
             <article className="team-card" key={member.name}>
-              <div className="team-photo"><img src={member.image} alt={`${member.name} — demo portret`} loading="lazy" /><span>Demo portret</span></div>
+              <div className="team-photo"><img src={member.image} alt={`${member.name} yo‘nalishidan loyiha vizuali`} loading="lazy" /><span>Ijodiy yo‘nalish</span></div>
               <div><span>0{index + 1}</span><h3>{member.name}</h3><p>{member.role}</p></div>
             </article>
           ))}
@@ -183,13 +177,13 @@ export default function Home() {
 
       <section className="careers section-shell" id="careers">
         <div className="wide-section-head scroll-reveal">
-          <div><p className="kicker"><span /> Karyera</p><h2>Biz bilan birga ulg‘aying.</h2></div>
-          <p>Vakansiyalar hozircha namunaviy. Portfolio va fikrlash usuli tajriba yillaridan ham muhimroq.</p>
+          <div><p className="kicker"><span /> Hamkorlik</p><h2>Birga katta olamlar yaratamiz.</h2></div>
+          <p>Yaxshi portfolio, aniq g‘oya va hamkorlikka ochiq yondashuv — suhbatni boshlash uchun yetarli.</p>
         </div>
         <div className="job-list">
           {jobs.map((job) => (
-            <a href={`mailto:karyera@multbilim.uz?subject=${encodeURIComponent(job.title)}`} key={job.title}>
-              <span>{job.area}</span><div><h3>{job.title}</h3><p>{job.meta}</p></div><b>Ariza yuborish ↗</b>
+            <a href="#contact" key={job.title}>
+              <span>{job.area}</span><div><h3>{job.title}</h3><p>{job.meta}</p></div><b>Suhbatni boshlash ↘</b>
             </a>
           ))}
         </div>
@@ -218,11 +212,11 @@ export default function Home() {
           <div className="contact-project-grid">
             <ProjectContactForm />
             <aside className="contact-aside">
-              <div><span>Umumiy</span><a href="mailto:hello@multbilim.uz">hello@multbilim.uz</a></div>
-              <div><span>Buyurtma va koproduksiya</span><a href="mailto:loyiha@multbilim.uz">loyiha@multbilim.uz</a></div>
-              <div><span>Karyera</span><a href="mailto:karyera@multbilim.uz">karyera@multbilim.uz</a></div>
-              <div><span>Studio</span><p>Toshkent shahri<br />Dushanba–Juma · 09:00–18:00</p></div>
-              <small>Kontaktlar hozircha demo. Real manzillar berilgach yangilanadi.</small>
+              <div><span>Buyurtma</span><p>Serial · Rolik · Ta’limiy kontent</p></div>
+              <div><span>Hamkorlik</span><p>Koproduksiya · Litsenziya · Servis</p></div>
+              <div><span>Portfolio</span><p>Animatsiya · Dizayn · Hikoya · Ovoz</p></div>
+              <div><span>Studiya</span><p>Toshkent, O‘zbekiston</p></div>
+              <small>Briefni forma orqali tayyorlang. Taqdimotdan keyin studiyaning rasmiy aloqa kanali bilan davom etamiz.</small>
             </aside>
           </div>
         </div>

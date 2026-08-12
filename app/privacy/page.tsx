@@ -21,7 +21,7 @@ export default function PrivacyPage() {
         <section><span>03</span><div><h2>Nima uchun?</h2><p>Qaysi loyihalar ko‘proq qiziqish uyg‘otayotganini, sayt qaysi qurilmalarda ochilayotganini va sahifalar qanday ishlatilayotganini umumiy statistika orqali tushunish uchun.</p></div></section>
         <section><span>04</span><div><h2>Saqlash muddati</h2><p>Tashrif yozuvlari 13 oy davomida saqlanadi va yangi yozuv kelganda eski ma’lumotlar avtomatik o‘chiriladi. Maxfiylik tanlovi 6 oydan keyin qayta so‘raladi.</p></div></section>
         <section><span>05</span><div><h2>Tanlovingiz</h2><p>Analitika boshlanishidan oldin qabul yoki rad etishingiz mumkin. Footerdagi “Maxfiylik tanlovlari” orqali rozilikni istalgan vaqtda qaytarib olishingiz mumkin. “Kuzatilmasin” brauzer signali ham hurmat qilinadi.</p><button className="button button-primary" type="button" data-privacy-open>Maxfiylik tanlovlarini ochish</button></div></section>
-        <section><span>06</span><div><h2>Bog‘lanish</h2><p>Maxfiylik yoki ma’lumotlarni o‘chirish bo‘yicha savollar uchun: <a href="mailto:hello@multbilim.uz">hello@multbilim.uz</a>.</p></div></section>
+        <section><span>06</span><div><h2>Bog‘lanish</h2><p>Maxfiylik yoki ma’lumotlarni o‘chirish bo‘yicha murojaatni bosh sahifadagi aloqa bo‘limi orqali brief ko‘rinishida tayyorlash mumkin.</p></div></section>
       </div>
       <SiteFooter />
     </main>

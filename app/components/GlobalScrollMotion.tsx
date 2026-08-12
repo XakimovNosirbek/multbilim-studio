@@ -8,9 +8,14 @@ const selector = [
   "main h2",
   "main h3",
   "main h4",
-  "main p",
   "main .kicker",
   "main .section-label",
+  "main .hero-copy",
+  "main .intro-copy p",
+  "main .section-note",
+  "main .wide-section-head > p",
+  "main .proof-content > p",
+  "main .contact-project-heading > p",
   "main .stat-card",
   "main .project-card",
   "main .video-card",
@@ -50,7 +55,7 @@ export function GlobalScrollMotion() {
     elements.forEach((element, index) => {
       element.classList.add("scroll-motion-item");
       element.style.setProperty("--scroll-motion-delay", `${(index % 5) * 95}ms`);
-      element.style.setProperty("--scroll-motion-y", "16px");
+      element.style.setProperty("--scroll-motion-y", "12px");
       element.style.setProperty("--scroll-live-y", "0px");
     });
 
@@ -77,7 +82,7 @@ export function GlobalScrollMotion() {
 
       if (nextDirection !== scrollDirection) {
         scrollDirection = nextDirection;
-        const offset = scrollDirection === "down" ? "16px" : "-16px";
+        const offset = scrollDirection === "down" ? "12px" : "-12px";
         elements.forEach((element) => {
           if (!element.classList.contains("is-visible")) {
             element.style.setProperty("--scroll-motion-y", offset);
@@ -97,7 +102,7 @@ export function GlobalScrollMotion() {
           if (entry.isIntersecting) {
             element.style.setProperty(
               "--scroll-motion-y",
-              scrollDirection === "down" ? "16px" : "-16px",
+              scrollDirection === "down" ? "12px" : "-12px",
             );
             visibleElements.add(element);
             element.classList.add("is-visible");
